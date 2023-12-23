@@ -19,6 +19,8 @@ public enum BizCodeEnum implements StatusCodeEnumFormat {
     FORBIDDEN("403", "权限不足无法访问"),
     // === 系统异常
     PARAM_ERROR("1001", "参数错误"),
+    LOCK_ERROR("1002", "获取锁失败"),
+    REQUEST_FREQUENTLY("1003", "请求过于频繁，请稍后再试"),
     // === 业务异常
     SECURITY_USERNAME_PASSWORD_ERROR("2001", "用户名或密码错误"),
     SECURITY_USER_IS_DISABLED("2002", "用户已被禁用"),

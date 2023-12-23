@@ -35,12 +35,11 @@ public class JwtUtils {
     /**
      * 初始化参数
      *
-     * @param issuer             签发者
-     * @param secretKey          密钥 最小长度：4
-     * @param expirationTime     Token过期时间 单位：秒
-     * @param issuers            签发者列表 校验签发者时使用
-     * @param signatureAlgorithm 加密算法
-     * @param audience           接受者
+     * @param issuer         签发者
+     * @param secretKey      密钥 最小长度：4
+     * @param expirationTime Token过期时间 单位：秒
+     * @param issuers        签发者列表 校验签发者时使用
+     * @param audience       接受者
      */
     public static void initialize(String issuer, String secretKey, long expirationTime, String header, List<String> issuers, String audience) {
         jwtConfig = new JwtConfig();
