@@ -14,7 +14,6 @@ import java.util.Objects;
  */
 public class Sm4PasswordEncoder implements PasswordEncoder {
 
-
     private final String privateKey;
 
     public Sm4PasswordEncoder(String privateKey) {

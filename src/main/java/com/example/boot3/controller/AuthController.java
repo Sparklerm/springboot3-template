@@ -1,15 +1,17 @@
 package com.example.boot3.controller;
 
+import com.example.boot3.common.utils.JwtUtils;
+import com.example.boot3.config.security.SecurityUserDetails;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
 
 /**
  * @author Alex Meng
@@ -18,6 +20,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
     @Resource
     private AuthenticationManager authenticationManager;
 
@@ -28,7 +31,23 @@ public class AuthController {
     public String login(@RequestParam(name = "username") String username,
                         @RequestParam(name = "password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        return Objects.isNull(authenticate) ? "登录失败" : "登录成功";
+        try {
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            SecurityUserDetails securityUserDetails = (SecurityUserDetails) authentication.getPrincipal();
+        } catch (BadCredentialsException e) {
+            return "登录失败";
+        }
+        return JwtUtils.generateToken(username, 60);
     }
+
+    @GetMapping("/fun1")
+    public String fun1() {
+        return "fun1";
+    }
+
+    @GetMapping("/fun2")
+    public String fun2() {
+        return "fun2";
+    }
+
 }

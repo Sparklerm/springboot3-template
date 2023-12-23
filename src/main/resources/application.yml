@@ -1,1 +1,13 @@
+server:
+  port: 8080
 
+# ======== Security 配置 ========
+sm4:
+  key: 1234567890123456
+
+# ======== JWT密钥配置 ========
+jwt:
+  secret: c7668c428c0117c6
+  expirationTime: 604800
+  issuer: boot
+  tokenHeader: Authorization
