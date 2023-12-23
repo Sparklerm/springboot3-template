@@ -2,14 +2,14 @@ package com.example.boot3.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.boot3.model.dto.UserLoginResultDTO;
-import com.example.boot3.model.po.AdminUserPO;
+import com.example.boot3.model.po.UserPO;
 
 /**
  * @author MENGJIAO
  * @description 针对表【admin_user(管理员用户表)】的数据库操作Service
  * @createDate 2023-12-23 22:39:27
  */
-public interface IAdminUserService extends IService<AdminUserPO> {
+public interface IUserService extends IService<UserPO> {
     /**
      * 用户注册
      *

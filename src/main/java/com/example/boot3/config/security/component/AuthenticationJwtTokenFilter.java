@@ -6,7 +6,7 @@ import com.example.boot3.common.utils.JsonUtils;
 import com.example.boot3.common.utils.JwtUtils;
 import com.example.boot3.common.utils.StrUtils;
 import com.example.boot3.common.utils.redis.RedisService;
-import com.example.boot3.model.po.AdminUserPO;
+import com.example.boot3.model.po.UserPO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -52,7 +52,7 @@ public class AuthenticationJwtTokenFilter extends OncePerRequestFilter {
             if (StringUtils.isNotBlank(subject) && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // 解密token中的用户信息
                 String decodeSubject = SecureUtil.aes(JwtUtils.getCurrentConfig().getSecretKey().getBytes()).decryptStr(subject);
-                AdminUserPO userInfo = JsonUtils.toObj(decodeSubject, AdminUserPO.class);
+                UserPO userInfo = JsonUtils.toObj(decodeSubject, UserPO.class);
                 // 验证token是否有效
                 String cacheToken =
                         redisService.getString(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, userInfo.getUsername()));

@@ -1,7 +1,8 @@
 package com.example.boot3.config.security.component;
 
 import com.example.boot3.common.enums.YesNoEnum;
-import com.example.boot3.model.po.AdminUserPO;
+import com.example.boot3.model.po.PermissionPO;
+import com.example.boot3.model.po.UserPO;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,18 +20,20 @@ import java.util.stream.Collectors;
 @Data
 public class SecurityUserDetails implements UserDetails {
 
-    private AdminUserPO user;
+    private UserPO user;
+
+    private List<PermissionPO> permissions;
+
+    public SecurityUserDetails(UserPO user, List<PermissionPO> permissions) {
+        this.user = user;
+        this.permissions = permissions;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<String> permissions = List.of("fun1");
         return permissions.stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(permission -> new SimpleGrantedAuthority(permission.getId() + ":" + permission.getName()))
                 .collect(Collectors.toList());
-    }
-
-    public SecurityUserDetails(AdminUserPO user) {
-        this.user = user;
     }
 
     @Override

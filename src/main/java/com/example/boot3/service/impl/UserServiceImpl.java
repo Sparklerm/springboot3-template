@@ -2,6 +2,7 @@ package com.example.boot3.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.boot3.common.constants.BizConstant;
 import com.example.boot3.common.constants.RedisCacheKey;
 import com.example.boot3.common.enums.BizCodeEnum;
 import com.example.boot3.common.exception.BizAssert;
@@ -12,8 +13,8 @@ import com.example.boot3.common.utils.redis.RedisService;
 import com.example.boot3.config.security.component.SecurityUserDetails;
 import com.example.boot3.dao.IAdminUserDao;
 import com.example.boot3.model.dto.UserLoginResultDTO;
-import com.example.boot3.model.po.AdminUserPO;
-import com.example.boot3.service.IAdminUserService;
+import com.example.boot3.model.po.UserPO;
+import com.example.boot3.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,14 +22,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author MENGJIAO
  * @description 针对表【admin_user(管理员用户表)】的数据库操作Service实现
  * @createDate 2023-12-23 22:39:27
  */
 @Service
-public class AdminUserServiceImpl extends ServiceImpl<IAdminUserDao, AdminUserPO>
-        implements IAdminUserService {
+public class UserServiceImpl extends ServiceImpl<IAdminUserDao, UserPO>
+        implements IUserService {
 
     @Resource
     private IAdminUserDao adminUserDao;
@@ -42,10 +45,10 @@ public class AdminUserServiceImpl extends ServiceImpl<IAdminUserDao, AdminUserPO
     @Override
     public Integer register(String username, String password, String nikeName) {
         // 查询是否有相同用户名的用户
-        AdminUserPO hasUser = adminUserDao.selectByUsername(username);
+        UserPO hasUser = adminUserDao.selectByUsername(username);
         BizAssert.isNull(hasUser, BizCodeEnum.USERNAME_ALREADY_REGISTER);
         // 注册用户
-        AdminUserPO adminUser = new AdminUserPO();
+        UserPO adminUser = new UserPO();
         adminUser.setUsername(username);
         adminUser.setNickName(nikeName);
         adminUser.setPassword(passwordEncoder.encode(password));
@@ -65,7 +68,11 @@ public class AdminUserServiceImpl extends ServiceImpl<IAdminUserDao, AdminUserPO
                 SecureUtil.aes(JwtUtils.getCurrentConfig().getSecretKey().getBytes()).encryptHex(JsonUtils.toJson(userInfo.getUser()));
         String accessToken = JwtUtils.generateToken(encodeSubject);
         // 将鉴权Token存入Redis
-        redisService.setString(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, userInfo.getUsername()), accessToken);
+        redisService.setString(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, userInfo.getUsername()),
+                accessToken,
+                BizConstant.DEFAULT_TOKEN_EXPIRE,
+                TimeUnit.SECONDS);
+
         return UserLoginResultDTO.builder()
                 .accessToken(accessToken)
                 .build();

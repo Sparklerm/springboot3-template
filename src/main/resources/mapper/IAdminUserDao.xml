@@ -8,10 +8,10 @@
         id, username, nick_name, password, status, create_time, update_time
     </sql>
 
-    <select id="selectByUsername" resultType="com.example.boot3.model.po.AdminUserPO">
+    <select id="selectByUsername" resultType="com.example.boot3.model.po.UserPO">
         select
         <include refid="Base_Column_List"/>
-        from admin_user
-        where username = #{username}
+        from user u
+        where u.username = #{username}
     </select>
 </mapper>

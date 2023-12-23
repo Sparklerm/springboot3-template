@@ -77,8 +77,8 @@ sm4:
 
 permit:
   urls:
-    - "/admin/user/register"
-    - "/admin/user/login"
+    - "/user/register"
+    - "/user/login"
 
 # ======== JWT密钥配置 ========
 jwt:

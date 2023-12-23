@@ -26,4 +26,18 @@ public class RedisCacheKey {
         String USER_TOKEN = USER_ROOT + "token:{0}";
     }
 
+    /**
+     * 权限模块缓存KEY
+     */
+    public interface Permission {
+        /**
+         * 权限模块根路径
+         */
+        String PERMISSION_ROOT = RedisCacheKey.ROOT + "permission:";
+        /**
+         * 所有权限信息缓存
+         */
+        String PERMISSION_ALL = PERMISSION_ROOT + "all";
+    }
+
 }

@@ -17,9 +17,9 @@ import java.io.Serializable;
  * @TableName admin_user
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "admin_user")
+@TableName(value = "user")
 @Data
-public class AdminUserPO extends BasePO implements Serializable {
+public class UserPO extends BasePO implements Serializable {
     @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

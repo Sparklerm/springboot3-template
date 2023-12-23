@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @createDate 2023-12-23 23:56
  */
 @Data
-public class AdminUserLoginRequest implements Serializable {
+public class UserLoginRequest implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
