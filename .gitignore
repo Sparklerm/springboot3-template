@@ -34,4 +34,4 @@ build/
 
 ### Coding ###
 logs
-!/src/main/resources/rebel.xml
+/src/main/resources/rebel.xml

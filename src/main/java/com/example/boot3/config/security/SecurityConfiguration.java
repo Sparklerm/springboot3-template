@@ -61,13 +61,13 @@ public class SecurityConfiguration {
     @Value("${sm4.key}")
     private String sm4Key;
     @Resource
-    private AuthenticationJwtTokenFilter authenticationJwtTokenFilter;
-    @Resource
     private PermitUrlsProperties permitUrlsProperties;
     @Resource
     private IPermissionService permissionService;
     @Resource
     private RedisService redisService;
+    @Resource
+    private AuthenticationJwtTokenFilter authenticationJwtTokenFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -80,14 +80,6 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new Sm4PasswordEncoder(sm4Key);
-    }
-
-    /**
-     * 清除本地缓存
-     */
-    public static synchronized void clearPermissionMap() {
-        permissionMap.clear();
-        permissionMap = null;
     }
 
     /**
@@ -112,6 +104,14 @@ public class SecurityConfiguration {
                     new org.springframework.security.access.SecurityConfig(permission.getId() + ":" + permission.getName()));
         }
         permissionMap = map;
+    }
+
+    /**
+     * 清除本地缓存
+     */
+    public static synchronized void clearPermissionMap() {
+        permissionMap.clear();
+        permissionMap = null;
     }
 
     /**

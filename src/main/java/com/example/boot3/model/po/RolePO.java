@@ -18,24 +18,28 @@ import java.io.Serializable;
 @TableName(value = "role")
 @Data
 public class RolePO extends BasePO implements Serializable {
-    @Serial
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
     /**
      * 主键Id
      */
     @TableId(type = IdType.AUTO)
     private Long id;
+
     /**
      * 角色名
      */
     private String name;
+
     /**
      * 默认角色：0：非默认，1：默认
      */
     private Integer isDefault;
+
     /**
      * 备注
      */
     private String remark;
+
+    @Serial
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
 }

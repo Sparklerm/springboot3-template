@@ -24,16 +24,16 @@ public class SecurityUserDetails implements UserDetails {
 
     private List<PermissionPO> permissions;
 
-    public SecurityUserDetails(UserPO user, List<PermissionPO> permissions) {
-        this.user = user;
-        this.permissions = permissions;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return permissions.stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getId() + ":" + permission.getName()))
                 .collect(Collectors.toList());
+    }
+
+    public SecurityUserDetails(UserPO user, List<PermissionPO> permissions) {
+        this.user = user;
+        this.permissions = permissions;
     }
 
     @Override
