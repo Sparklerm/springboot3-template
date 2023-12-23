@@ -24,6 +24,9 @@ public class JwtUtils {
      * 默认JWT标签头
      */
     public static final String HEADER = "Authorization";
+    /**
+     * JWT配置信息
+     */
     private static JwtConfig jwtConfig;
 
     private JwtUtils() {
@@ -142,6 +145,12 @@ public class JwtUtils {
         return JWT.decode(token).getSubject();
     }
 
+    /**
+     * 获取当前Jwt配置信息
+     */
+    public static JwtConfig getCurrentConfig() {
+        return jwtConfig;
+    }
 
     @Data
     public static class JwtConfig {

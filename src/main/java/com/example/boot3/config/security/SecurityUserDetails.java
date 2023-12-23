@@ -1,5 +1,7 @@
 package com.example.boot3.config.security;
 
+import com.example.boot3.common.enums.YesNoEnum;
+import com.example.boot3.model.po.AdminUserPO;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -7,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -16,9 +19,7 @@ import java.util.stream.Collectors;
 @Data
 public class SecurityUserDetails implements UserDetails {
 
-    private String username;
-
-    private String password;
+    private AdminUserPO user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -28,14 +29,13 @@ public class SecurityUserDetails implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public SecurityUserDetails(AdminUserPO user) {
+        this.user = user;
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public String getPassword() {
+        return user.getPassword();
     }
 
     @Override
@@ -54,7 +54,12 @@ public class SecurityUserDetails implements UserDetails {
     }
 
     @Override
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+    @Override
     public boolean isEnabled() {
-        return true;
+        return Objects.equals(user.getStatus(), YesNoEnum.YES.getKey());
     }
 }

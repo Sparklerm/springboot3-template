@@ -61,6 +61,14 @@ public class SecurityConfiguration {
     }
 
     /**
+     * 放行的接口
+     */
+    private final String[] permitUrls = {
+            "/admin/user/register",
+            "/admin/user/login",
+    };
+
+    /**
      * Spring Security 过滤链
      */
     @Bean
@@ -89,8 +97,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorization -> authorization
                         // 允许所有的OPTIONS请求
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // 放行登录接口
-                        .requestMatchers("/auth/login").permitAll()
+                        // 放行登录
+                        .requestMatchers(permitUrls).permitAll()
                         // 允许任意请求被已登录的用户访问
                         .anyRequest().access((authentication, object) -> {
                             boolean isMatch = false;
