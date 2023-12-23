@@ -1,4 +1,4 @@
-package com.example.boot3.config.security;
+package com.example.boot3.config.security.component;
 
 import cn.hutool.crypto.SmUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;

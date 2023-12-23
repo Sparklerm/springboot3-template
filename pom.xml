@@ -22,6 +22,7 @@
         <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
         <redisson.version>3.25.0</redisson.version>
         <guava.version>33.0.0-jre</guava.version>
+        <ttl.version>2.2.0</ttl.version>
     </properties>
 
     <dependencies>
@@ -106,6 +107,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+            <version>${ttl.version}</version>
         </dependency>
     </dependencies>
 

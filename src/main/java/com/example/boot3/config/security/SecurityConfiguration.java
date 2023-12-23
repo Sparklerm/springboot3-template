@@ -2,26 +2,25 @@ package com.example.boot3.config.security;
 
 import com.example.boot3.common.exception.UserAccessDeniedHandler;
 import com.example.boot3.common.exception.UserAuthenticationEntryPoint;
+import com.example.boot3.config.security.component.AuthenticationJwtTokenFilter;
+import com.example.boot3.config.security.component.PermitUrlsProperties;
+import com.example.boot3.config.security.component.SecurityUserDetailsService;
+import com.example.boot3.config.security.component.Sm4PasswordEncoder;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.AntPathMatcher;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,10 +62,8 @@ public class SecurityConfiguration {
     /**
      * 放行的接口
      */
-    private final String[] permitUrls = {
-            "/admin/user/register",
-            "/admin/user/login",
-    };
+    @Resource
+    private PermitUrlsProperties permitUrlsProperties;
 
     /**
      * Spring Security 过滤链
@@ -95,41 +92,42 @@ public class SecurityConfiguration {
                 )
                 // 配置拦截信息
                 .authorizeHttpRequests(authorization -> authorization
-                        // 允许所有的OPTIONS请求
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // 放行登录
-                        .requestMatchers(permitUrls).permitAll()
-                        // 允许任意请求被已登录的用户访问
-                        .anyRequest().access((authentication, object) -> {
-                            boolean isMatch = false;
-                            // 获取当前请求的URL
-                            String requestUrl = object.getRequest().getRequestURI();
-                            // 获取所有权限信息
-                            Map<String, String> apiPermission = apiPermissionMap();
-                            // 遍历权限信息匹配当前请求的URL
-                            for (Map.Entry<String, String> entry : apiPermission.entrySet()) {
-                                if (new AntPathMatcher().match(entry.getKey(), requestUrl)) {
-                                    isMatch = true;
-                                    // 匹配到接口权限，判断当前用户是否拥有该权限
-                                    Collection<? extends GrantedAuthority> authorities = authentication.get().getAuthorities();
-                                    for (GrantedAuthority authority : authorities) {
-                                        if (entry.getValue().equals(authority.getAuthority())) {
-                                            return new AuthorizationDecision(true);
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-
-                            //说明请求的 URL 地址和数据库的地址没有匹配上，对于这种请求，统一只要登录就能访问
-                            if (!isMatch) {
-                                if (authentication.get() instanceof AnonymousAuthenticationToken) {
-                                    return new AuthorizationDecision(false);
-                                }
-                                return new AuthorizationDecision(true);
-                            }
-                            return new AuthorizationDecision(false);
-                        })
+                                // 允许所有的OPTIONS请求
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                // 放行登录
+                                .requestMatchers(permitUrlsProperties.getUrls().toArray(new String[0])).permitAll()
+                                // 允许任意请求被已登录的用户访问
+                                .anyRequest().authenticated()
+//                        .anyRequest().access((authentication, object) -> {
+//                            boolean isMatch = false;
+//                            // 获取当前请求的URL
+//                            String requestUrl = object.getRequest().getRequestURI();
+//                            // 获取所有权限信息
+//                            Map<String, String> apiPermission = apiPermissionMap();
+//                            // 遍历权限信息匹配当前请求的URL
+//                            for (Map.Entry<String, String> entry : apiPermission.entrySet()) {
+//                                if (new AntPathMatcher().match(entry.getKey(), requestUrl)) {
+//                                    isMatch = true;
+//                                    // 匹配到接口权限，判断当前用户是否拥有该权限
+//                                    Collection<? extends GrantedAuthority> authorities = authentication.get().getAuthorities();
+//                                    for (GrantedAuthority authority : authorities) {
+//                                        if (entry.getValue().equals(authority.getAuthority())) {
+//                                            return new AuthorizationDecision(true);
+//                                        }
+//                                    }
+//                                    break;
+//                                }
+//                            }
+//
+//                            //说明请求的 URL 地址和数据库的地址没有匹配上，对于这种请求，统一只要登录就能访问
+//                            if (!isMatch) {
+//                                if (authentication.get() instanceof AnonymousAuthenticationToken) {
+//                                    return new AuthorizationDecision(false);
+//                                }
+//                                return new AuthorizationDecision(true);
+//                            }
+//                            return new AuthorizationDecision(false);
+//                        })
                 )
                 .userDetailsService(securityUserDetailsService)
                 // 添加自定义JWT过滤器

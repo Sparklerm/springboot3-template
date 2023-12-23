@@ -1,11 +1,15 @@
 package com.example.boot3.controller;
 
 import com.example.boot3.common.model.result.ApiResult;
+import com.example.boot3.config.security.component.SecurityDetailsContextHolder;
+import com.example.boot3.config.security.component.SecurityUserDetails;
 import com.example.boot3.model.dto.UserLoginResultDTO;
+import com.example.boot3.model.po.AdminUserPO;
 import com.example.boot3.model.vo.request.AdminUserLoginRequest;
 import com.example.boot3.model.vo.request.AdminUserRegisterRequest;
 import com.example.boot3.service.IAdminUserService;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +36,12 @@ public class AdminUserController {
     public ApiResult<UserLoginResultDTO> doLogin(@RequestBody AdminUserLoginRequest request) {
         UserLoginResultDTO loginResult = adminUserService.login(request.getUsername(), request.getPassword());
         return ApiResult.success(loginResult);
+    }
+
+    @GetMapping("/current")
+    public ApiResult<AdminUserPO> current() {
+        SecurityUserDetails userDetails = SecurityDetailsContextHolder.getContext();
+        AdminUserPO user = userDetails.getUser();
+        return ApiResult.success(user);
     }
 }

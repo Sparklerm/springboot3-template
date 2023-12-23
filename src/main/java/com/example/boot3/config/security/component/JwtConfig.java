@@ -1,4 +1,4 @@
-package com.example.boot3.config.security;
+package com.example.boot3.config.security.component;
 
 import com.example.boot3.common.utils.JwtUtils;
 import jakarta.annotation.PostConstruct;

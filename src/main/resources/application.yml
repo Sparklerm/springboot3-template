@@ -75,9 +75,25 @@ mybatis-plus:
 sm4:
   key: 1234567890123456
 
+permit:
+  urls:
+    - "/admin/user/register"
+    - "/admin/user/login"
+
 # ======== JWT密钥配置 ========
 jwt:
   secret: c7668c428c0117c6
   expirationTime: 604800
   issuer: boot
   tokenHeader: Authorization
+
+# ======== 线程池配置 ========
+thread:
+  pool:
+    executor:
+      config:
+        core-pool-size: 20
+        max-pool-size: 50
+        keep-alive-time: 5000
+        block-queue-size: 5000
+        policy: CallerRunsPolicy

@@ -6,7 +6,7 @@ import com.example.boot3.common.enums.BizCodeEnum;
 import com.example.boot3.common.exception.BizAssert;
 import com.example.boot3.common.utils.JsonUtils;
 import com.example.boot3.common.utils.JwtUtils;
-import com.example.boot3.config.security.SecurityUserDetails;
+import com.example.boot3.config.security.component.SecurityUserDetails;
 import com.example.boot3.dao.IAdminUserDao;
 import com.example.boot3.model.dto.UserLoginResultDTO;
 import com.example.boot3.model.po.AdminUserPO;

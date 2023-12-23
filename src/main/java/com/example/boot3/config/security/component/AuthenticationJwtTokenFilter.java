@@ -1,13 +1,15 @@
-package com.example.boot3.config.security;
+package com.example.boot3.config.security.component;
 
+import cn.hutool.crypto.SecureUtil;
+import com.example.boot3.common.utils.JsonUtils;
 import com.example.boot3.common.utils.JwtUtils;
+import com.example.boot3.model.po.AdminUserPO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,9 +26,6 @@ import java.io.IOException;
 @Component
 public class AuthenticationJwtTokenFilter extends OncePerRequestFilter {
 
-    @Value("${jwt.tokenHeader}")
-    private String tokenHeader;
-
     @Resource
     private SecurityUserDetailsService securityUserDetailsService;
 
@@ -35,15 +34,18 @@ public class AuthenticationJwtTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String requestToken = request.getHeader(this.tokenHeader);
+        String requestToken = request.getHeader(JwtUtils.getCurrentConfig().getHeader());
         // 读取请求头中的token
         if (StringUtils.isNotBlank(requestToken)) {
             // 判断token是否有效
             boolean verifyToken = JwtUtils.isValidToken(requestToken);
             if (verifyToken) {
                 // 解析token中的用户信息
-                String username = JwtUtils.getSubject(requestToken);
-                UserDetails userDetails = securityUserDetailsService.loadUserByUsername(username);
+                String subject = JwtUtils.getSubject(requestToken);
+                // 解密token中的用户信息
+                String decodeSubject = SecureUtil.aes(JwtUtils.getCurrentConfig().getSecretKey().getBytes()).decryptStr(subject);
+                AdminUserPO userInfo = JsonUtils.toObj(decodeSubject, AdminUserPO.class);
+                UserDetails userDetails = securityUserDetailsService.loadUserByUsername(userInfo.getUsername());
                 // 保存用户信息到当前会话
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
