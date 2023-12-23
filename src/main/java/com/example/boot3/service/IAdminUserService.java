@@ -28,4 +28,11 @@ public interface IAdminUserService extends IService<AdminUserPO> {
      * @return token信息
      */
     UserLoginResultDTO login(String username, String password);
+
+    /**
+     * 退出登录
+     *
+     * @param username 用户名
+     */
+    void logout(String username);
 }

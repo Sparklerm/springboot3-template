@@ -44,4 +44,12 @@ public class AdminUserController {
         AdminUserPO user = userDetails.getUser();
         return ApiResult.success(user);
     }
+
+    @PostMapping("/logout")
+    public ApiResult<String> doLogout() {
+        SecurityUserDetails userDetails = SecurityDetailsContextHolder.getContext();
+        AdminUserPO user = userDetails.getUser();
+        adminUserService.logout(user.getUsername());
+        return ApiResult.success("退出登录成功");
+    }
 }

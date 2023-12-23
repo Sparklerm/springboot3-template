@@ -2,10 +2,13 @@ package com.example.boot3.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.boot3.common.constants.RedisCacheKey;
 import com.example.boot3.common.enums.BizCodeEnum;
 import com.example.boot3.common.exception.BizAssert;
 import com.example.boot3.common.utils.JsonUtils;
 import com.example.boot3.common.utils.JwtUtils;
+import com.example.boot3.common.utils.StrUtils;
+import com.example.boot3.common.utils.redis.RedisService;
 import com.example.boot3.config.security.component.SecurityUserDetails;
 import com.example.boot3.dao.IAdminUserDao;
 import com.example.boot3.model.dto.UserLoginResultDTO;
@@ -33,6 +36,8 @@ public class AdminUserServiceImpl extends ServiceImpl<IAdminUserDao, AdminUserPO
     private PasswordEncoder passwordEncoder;
     @Resource
     private AuthenticationManager authenticationManager;
+    @Resource
+    private RedisService redisService;
 
     @Override
     public Integer register(String username, String password, String nikeName) {
@@ -59,10 +64,17 @@ public class AdminUserServiceImpl extends ServiceImpl<IAdminUserDao, AdminUserPO
         String encodeSubject =
                 SecureUtil.aes(JwtUtils.getCurrentConfig().getSecretKey().getBytes()).encryptHex(JsonUtils.toJson(userInfo.getUser()));
         String accessToken = JwtUtils.generateToken(encodeSubject);
-
+        // 将鉴权Token存入Redis
+        redisService.setString(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, userInfo.getUsername()), accessToken);
         return UserLoginResultDTO.builder()
                 .accessToken(accessToken)
                 .build();
+    }
+
+    @Override
+    public void logout(String username) {
+        // 在Redis中删除用户鉴权Token
+        redisService.remove(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, username));
     }
 }
 
