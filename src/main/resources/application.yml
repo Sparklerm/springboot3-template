@@ -1,6 +1,76 @@
 server:
   port: 8080
 
+# ======== 数据源配置 ========
+spring:
+  datasource:
+    # 数据库驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接地址
+    url: jdbc:mysql://localhost:3306/boot3?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    # 数据库用户名
+    username: root
+    # 数据库密码
+    password: 123456
+    # ======== HikariCP连接池配置 ========
+    hikari:
+      # 连接池名称，可选
+      pool-name: SpringHikariCP
+      # 是否自动提交事务
+      auto-commit: true
+      # 连接超时时间，单位为毫秒， 缺省:30秒，即30000
+      connection-timeout: 10000
+      # 连接池中连接的最大空闲时间，超过此时间将被释放，单位为毫秒，缺省:10分钟，即600000
+      idle-timeout: 30000
+      # 连接池中连接的最大存活时间，单位为毫秒，缺省:0 禁用
+      keepalive-time: 0
+      # 连接的最大生命周期，单位为毫秒，缺省:1800000 即30分钟
+      max-lifetime: 1800000
+      # 连接测试查询语句
+      connection-test-query: SELECT 1
+      # 连接池的最小空闲连接数，默认值: 与maximumPoolSize相同
+      minimum-idle: 5
+      # 连接池的最大连接数。默认值: 10
+      maximum-pool-size: 10
+      # 连接池初始化超时时间。默认值: 1
+      initialization-fail-timeout: 1
+      # 是否隔离内部查询，此属性仅在 autoCommit 被禁用时适用。默认值: false
+      isolate-internal-queries: false
+      # 是否允许暂停连接池。默认值: false
+      allow-pool-suspension: false
+      # 是否设置为只读。默认值: false
+      readOnly: false
+      # 是否注册MBeans。默认值: false
+      register-mbeans: false
+      # 连接初始化 SQL
+      connection-init-sql: "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+  # ======== Redis配置 ========
+  redis:
+    redisson:
+      file: classpath:redisson.yaml
+
+# ======== MybatisPlus配置 ========
+mybatis-plus:
+  # 搜索指定包别名
+  type-aliases-package: com.example.boot3.model.po
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath:mapper/**/*xml
+  # 配置驼峰
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射。默认值：true
+    map-underscore-to-camel-case: true
+    # 开启 Mybatis 二级缓存，默认为 true。
+    cache-enabled: true
+    # 日志输出实现。StdOutImpl 标准日志控制台输出
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      # 全局默认主键类型
+      id-type: assign_id
+      # 表名是否使用驼峰转下划线命名,只对表名生效。 默认true
+      table-underline: true
+
 # ======== Security 配置 ========
 sm4:
   key: 1234567890123456
