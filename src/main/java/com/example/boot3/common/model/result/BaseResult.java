@@ -1,5 +1,6 @@
 package com.example.boot3.common.model.result;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serial;
@@ -12,19 +13,16 @@ import java.io.Serializable;
  * @createDate 2020-11-13 13:17
  */
 @Data
+@Schema(name = "基础返回实体")
 public class BaseResult implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 请求Status
-     */
+    @Schema(name = "请求状态码")
     private String code;
 
-    /**
-     * 业务信息
-     */
+    @Schema(name = "业务信息")
     private String message;
 
     public BaseResult() {

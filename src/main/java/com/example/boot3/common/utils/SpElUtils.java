@@ -37,7 +37,7 @@ public class SpElUtils {
         try {
             expressionValue = expression.getValue(context, String.class);
         } catch (Exception e) {
-            expressionValue = JsonUtils.toJson(expression.getValue(context, Object.class));
+            expressionValue = JsonUtils.toJsonStr(expression.getValue(context, Object.class));
         }
         log.info("[ spEl 解析内容 ]: {}", expressionValue);
         return expressionValue;
@@ -59,7 +59,7 @@ public class SpElUtils {
             try {
                 expressionValue = expression.getValue(context, String.class);
             } catch (Exception e) {
-                expressionValue = JsonUtils.toJson(expression.getValue(context, Object.class));
+                expressionValue = JsonUtils.toJsonStr(expression.getValue(context, Object.class));
             }
             spELMap.put(item, expressionValue);
             log.info("[ item - spEl 解析内容 ]:{} - {}", item, expressionValue);

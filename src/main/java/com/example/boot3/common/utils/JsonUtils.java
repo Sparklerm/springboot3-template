@@ -155,7 +155,7 @@ public class JsonUtils {
      * @param object the object
      * @return string string
      */
-    public static String toJson(Object object) {
+    public static String toJsonStr(Object object) {
         if (Objects.isNull(object)) {
             return null;
         }

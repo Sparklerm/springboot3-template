@@ -35,15 +35,18 @@ public class JwtUtils {
     /**
      * 初始化参数
      *
+     * @param header         JWT标签头
+     * @param tokenHead      Token头
      * @param issuer         签发者
      * @param secretKey      密钥 最小长度：4
      * @param expirationTime Token过期时间 单位：秒
      * @param issuers        签发者列表 校验签发者时使用
      * @param audience       接受者
      */
-    public static void initialize(String issuer, String secretKey, long expirationTime, String header, List<String> issuers, String audience) {
+    public static void initialize(String header, String tokenHead, String issuer, String secretKey, long expirationTime, List<String> issuers, String audience) {
         jwtConfig = new JwtConfig();
         jwtConfig.setHeader(StringUtils.isNotBlank(header) ? header : HEADER);
+        jwtConfig.setTokenHead(tokenHead);
         jwtConfig.setIssuer(issuer);
         jwtConfig.setSecretKey(secretKey);
         jwtConfig.setExpirationTime(expirationTime);
@@ -57,14 +60,18 @@ public class JwtUtils {
 
     /**
      * 初始化参数
-     *
-     * @param issuer         签发者
-     * @param secretKey      密钥 最小长度：4
-     * @param expirationTime Token过期时间 单位：秒
      */
-    public static void initialize(String issuer, String secretKey, long expirationTime, String header) {
-        initialize(issuer, secretKey, expirationTime, header, null, null);
+    public static void initialize(String header, String issuer, String secretKey, long expirationTime) {
+        initialize(header, null, issuer, secretKey, expirationTime, null, null);
     }
+
+    /**
+     * 初始化参数
+     */
+    public static void initialize(String header, String tokenHead, String issuer, String secretKey, long expirationTime) {
+        initialize(header, tokenHead, issuer, secretKey, expirationTime, null, null);
+    }
+
 
     /**
      * 生成 Token
@@ -97,6 +104,16 @@ public class JwtUtils {
     }
 
     /**
+     * 获取Token数据体
+     */
+    public static String getTokenContent(String token) {
+        if (StringUtils.isNotBlank(jwtConfig.getTokenHead())) {
+            token = token.substring(jwtConfig.getTokenHead().length()).trim();
+        }
+        return token;
+    }
+
+    /**
      * 验证 Token
      *
      * @param token token
@@ -104,6 +121,7 @@ public class JwtUtils {
      */
     public static boolean isValidToken(String token) {
         try {
+            token = getTokenContent(token);
             Algorithm algorithm = Algorithm.HMAC256(jwtConfig.getSecretKey());
             JWTVerifier verifier = JWT.require(algorithm).build();
             verifier.verify(token);
@@ -122,6 +140,7 @@ public class JwtUtils {
      */
     public static boolean isTokenExpired(String token) {
         try {
+            token = getTokenContent(token);
             Algorithm algorithm = Algorithm.HMAC256(jwtConfig.secretKey);
             JWTVerifier verifier = JWT.require(algorithm).build();
             verifier.verify(token);
@@ -141,6 +160,7 @@ public class JwtUtils {
      * @return 主题
      */
     public static String getSubject(String token) {
+        token = getTokenContent(token);
         return JWT.decode(token).getSubject();
     }
 
@@ -154,9 +174,13 @@ public class JwtUtils {
     @Data
     public static class JwtConfig {
         /**
-         * JwtToken 标签头
+         * JwtToken Header标签
          */
         private String header;
+        /**
+         * Token头
+         */
+        private String tokenHead;
         /**
          * 签发者
          */

@@ -19,12 +19,14 @@ public class JwtConfig {
     private String issuer;
     @Value("${jwt.expirationTime}")
     private long expirationTime;
-    @Value("${jwt.tokenHeader}")
+    @Value("${jwt.header}")
     private String header;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
 
     @PostConstruct
     public void jwtInit() {
-        JwtUtils.initialize(issuer, secretKey, expirationTime, header);
+        JwtUtils.initialize(header, tokenHead, issuer, secretKey, expirationTime);
         log.info("JwtUtils初始化完成");
     }
 }

@@ -8,14 +8,13 @@ import com.example.boot3.common.exception.UserAccessDeniedHandler;
 import com.example.boot3.common.exception.UserAuthenticationEntryPoint;
 import com.example.boot3.common.utils.redis.RedisService;
 import com.example.boot3.config.security.component.AuthenticationJwtTokenFilter;
-import com.example.boot3.config.security.component.PermitUrlsProperties;
+import com.example.boot3.config.security.component.SecurityProperties;
 import com.example.boot3.config.security.component.SecurityUserDetailsService;
 import com.example.boot3.config.security.component.Sm4PasswordEncoder;
 import com.example.boot3.model.po.PermissionPO;
 import com.example.boot3.service.IPermissionService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,6 +32,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -58,10 +60,8 @@ public class SecurityConfiguration {
     @Resource
     private UserAuthenticationEntryPoint userAuthenticationEntryPoint;
     private static Map<String, ConfigAttribute> permissionMap = new ConcurrentHashMap<>();
-    @Value("${sm4.key}")
-    private String sm4Key;
     @Resource
-    private PermitUrlsProperties permitUrlsProperties;
+    private SecurityProperties securityProperties;
     @Resource
     private IPermissionService permissionService;
     @Resource
@@ -79,7 +79,7 @@ public class SecurityConfiguration {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new Sm4PasswordEncoder(sm4Key);
+        return new Sm4PasswordEncoder(securityProperties.getSk());
     }
 
     /**
@@ -143,8 +143,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorization -> authorization
                         // 允许所有的OPTIONS请求
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // 放行登录
-                        .requestMatchers(permitUrlsProperties.getUrls().toArray(new String[0])).permitAll()
+                        // 放行白名单
+                        .requestMatchers(HttpMethod.GET, securityProperties.getWhitelist().toArray(new String[0])).permitAll()
                         // 根据权限配置进行动态过滤
                         .anyRequest().access((authentication, object) -> {
                             // 如果没有权限资源则重新加载
@@ -156,7 +156,7 @@ public class SecurityConfiguration {
                             String path = URLUtil.getPath(requestURI);
                             PathMatcher pathMatcher = new AntPathMatcher();
                             // 白名单请求直接放行
-                            for (String url : permitUrlsProperties.getUrls()) {
+                            for (String url : securityProperties.getWhitelist()) {
                                 if (pathMatcher.match(url, requestURI)) {
                                     return new AuthorizationDecision(YesNoEnum.YES.getValue());
                                 }
@@ -194,4 +194,26 @@ public class SecurityConfiguration {
                 .build();
     }
 
+    /**
+     * 配置跨域
+     */
+    private CorsConfiguration corsConfig() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        //允许所有域名进行跨域调用
+        corsConfiguration.addAllowedOriginPattern("*");
+        //允许跨越发送cookie
+        corsConfiguration.setAllowCredentials(true);
+        //放行全部原始头信息
+        corsConfiguration.addAllowedHeader("*");
+        //允许所有请求方法跨域调用
+        corsConfiguration.addAllowedMethod("*");
+        return corsConfiguration;
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig());
+        return new CorsFilter(source);
+    }
 }

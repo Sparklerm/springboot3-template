@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /
 
 # ======== 数据源配置 ========
 spring:
@@ -72,20 +74,35 @@ mybatis-plus:
       table-underline: true
 
 # ======== Security 配置 ========
-sm4:
-  key: 1234567890123456
-
-permit:
-  urls:
+security:
+  # SM4 加密密钥
+  sk: 1234567890123456
+  # 白名单
+  whitelist:
+    - /swagger-ui/**
+    - /swagger-resources/**
+    - /v2/**
+    - /v3/**
+    - /webjars/**
+    - /doc.html
+    - /error
+    - /favicon.ico
+    - /**.html
+    - /**.css
+    - /**.js
+    - /**.gif
+    - /**.ico
+    - "/actuator/**"
     - "/user/register"
     - "/user/login"
 
 # ======== JWT密钥配置 ========
 jwt:
-  secret: c7668c428c0117c6
+  secret: 1234567890123456
   expirationTime: 604800
   issuer: boot
-  tokenHeader: Authorization
+  header: Authorization
+  tokenHead: Bearer
 
 # ======== 线程池配置 ========
 thread:
@@ -97,3 +114,10 @@ thread:
         keep-alive-time: 5000
         block-queue-size: 5000
         policy: CallerRunsPolicy
+
+# ======== SpringDocs文档配置 ========
+springdocs:
+  title: SpringBoot3.2.0 API Docs
+  description: SpringBoot3 + OpenAPI Docs
+  version: 0.0.1
+  scheme: Bearer

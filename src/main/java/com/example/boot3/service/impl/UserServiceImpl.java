@@ -1,6 +1,5 @@
 package com.example.boot3.service.impl;
 
-import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.boot3.common.constants.BizConstant;
 import com.example.boot3.common.constants.RedisCacheKey;
@@ -9,6 +8,7 @@ import com.example.boot3.common.exception.BizAssert;
 import com.example.boot3.common.utils.JsonUtils;
 import com.example.boot3.common.utils.JwtUtils;
 import com.example.boot3.common.utils.StrUtils;
+import com.example.boot3.common.utils.encrypt.EncryptUtils;
 import com.example.boot3.common.utils.redis.RedisService;
 import com.example.boot3.config.security.component.SecurityUserDetails;
 import com.example.boot3.dao.IAdminUserDao;
@@ -64,8 +64,9 @@ public class UserServiceImpl extends ServiceImpl<IAdminUserDao, UserPO>
         // 在认证信息authenticate中获取登录成功后的用户信息
         SecurityUserDetails userInfo = (SecurityUserDetails) authentication.getPrincipal();
         // 将当前登录用户信息存入Token
-        String encodeSubject =
-                SecureUtil.aes(JwtUtils.getCurrentConfig().getSecretKey().getBytes()).encryptHex(JsonUtils.toJson(userInfo.getUser()));
+        String encodeSubject = EncryptUtils.encryptBySm4(JsonUtils.toJsonStr(userInfo.getUser()),
+                JwtUtils.getCurrentConfig().getSecretKey(),
+                EncryptUtils.Sm4EncryptStrType.HEX);
         String accessToken = JwtUtils.generateToken(encodeSubject);
         // 将鉴权Token存入Redis
         redisService.setString(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, userInfo.getUsername()),

@@ -1,10 +1,10 @@
 package com.example.boot3.config.security.component;
 
-import cn.hutool.crypto.SecureUtil;
 import com.example.boot3.common.constants.RedisCacheKey;
 import com.example.boot3.common.utils.JsonUtils;
 import com.example.boot3.common.utils.JwtUtils;
 import com.example.boot3.common.utils.StrUtils;
+import com.example.boot3.common.utils.encrypt.EncryptUtils;
 import com.example.boot3.common.utils.redis.RedisService;
 import com.example.boot3.model.po.UserPO;
 import jakarta.annotation.Resource;
@@ -51,12 +51,12 @@ public class AuthenticationJwtTokenFilter extends OncePerRequestFilter {
             String subject = JwtUtils.getSubject(requestToken);
             if (StringUtils.isNotBlank(subject) && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // 解密token中的用户信息
-                String decodeSubject = SecureUtil.aes(JwtUtils.getCurrentConfig().getSecretKey().getBytes()).decryptStr(subject);
+                String decodeSubject = EncryptUtils.decryptBySm4(subject, JwtUtils.getCurrentConfig().getSecretKey());
                 UserPO userInfo = JsonUtils.toObj(decodeSubject, UserPO.class);
                 // 验证token是否有效
                 String cacheToken =
                         redisService.getString(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, userInfo.getUsername()));
-                if (StringUtils.isNotBlank(cacheToken) && cacheToken.equals(requestToken)) {
+                if (StringUtils.isNotBlank(cacheToken) && cacheToken.equals(JwtUtils.getTokenContent(requestToken))) {
                     SecurityUserDetails userDetails = (SecurityUserDetails) securityUserDetailsService.loadUserByUsername(userInfo.getUsername());
                     // 保存用户信息到当前会话
                     UsernamePasswordAuthenticationToken authentication =

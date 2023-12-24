@@ -1,10 +1,7 @@
 package com.example.boot3.config.security.component;
 
-import cn.hutool.crypto.SmUtil;
+import com.example.boot3.common.utils.encrypt.EncryptUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 /**
  * 国密SM4加密类
@@ -14,23 +11,22 @@ import java.util.Objects;
  */
 public class Sm4PasswordEncoder implements PasswordEncoder {
 
-    private final String privateKey;
+    private final String secretKey;
 
-    public Sm4PasswordEncoder(String privateKey) {
-        if (privateKey.length() != 16) {
+    public Sm4PasswordEncoder(String secretKey) {
+        if (secretKey.length() != 16) {
             throw new Error("SM4 key length is 16 bits");
         }
-        this.privateKey = privateKey;
+        this.secretKey = secretKey;
     }
 
     @Override
     public String encode(CharSequence rawPassword) {
-        return SmUtil.sm4(privateKey.getBytes(StandardCharsets.UTF_8)).encryptBase64(rawPassword.toString(), StandardCharsets.UTF_8);
+        return EncryptUtils.encryptBySm4(rawPassword.toString(), secretKey, EncryptUtils.Sm4EncryptStrType.HEX);
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        String decodePassword = SmUtil.sm4(privateKey.getBytes(StandardCharsets.UTF_8)).decryptStr(encodedPassword, StandardCharsets.UTF_8);
-        return Objects.equals(rawPassword.toString(), decodePassword);
+        return EncryptUtils.matchBySm4(rawPassword.toString(), encodedPassword, secretKey);
     }
 }

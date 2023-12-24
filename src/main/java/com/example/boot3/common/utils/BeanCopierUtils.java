@@ -30,7 +30,7 @@ public class BeanCopierUtils {
      * @return 转换后的目标数据 t
      */
     public static <S, T> T copyProperties(S source, Class<T> targetClass) {
-        String sourceJson = JsonUtils.toJson(source);
+        String sourceJson = JsonUtils.toJsonStr(source);
         return JsonUtils.toObj(sourceJson, targetClass);
     }
 

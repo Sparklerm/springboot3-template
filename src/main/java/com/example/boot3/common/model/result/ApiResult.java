@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.boot3.common.constants.BizConstant;
 import com.example.boot3.common.enums.BizCodeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,14 +18,13 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Schema(name = "接口统一返回格式")
 public class ApiResult<T> extends BaseResult implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 返回数据
-     */
+    @Schema(name = "数据体")
     private T data;
 
     private ApiResult() {

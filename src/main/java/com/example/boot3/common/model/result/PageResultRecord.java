@@ -1,6 +1,7 @@
 package com.example.boot3.common.model.result;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -15,29 +16,22 @@ import java.util.List;
  * @createDate 2023-12-23 22:57
  */
 @Data
+@Schema(name = "分页数据结构")
 public class PageResultRecord<T> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 当前页
-     */
+    @Schema(name = "当前页码")
     private Long current;
 
-    /**
-     * 每页显示条数
-     */
+    @Schema(name = "每页条数")
     private Long pageSize;
 
-    /**
-     * 总条数
-     */
+    @Schema(name = "总条数")
     private Long total;
 
-    /**
-     * 数据
-     */
+    @Schema(name = "数据列表")
     private List<T> records;
 
     public static <T> PageResultRecord<T> page2Result(IPage<T> result) {
