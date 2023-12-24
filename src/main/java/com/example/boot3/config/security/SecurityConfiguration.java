@@ -13,6 +13,7 @@ import com.example.boot3.config.security.component.SecurityUserDetailsService;
 import com.example.boot3.config.security.component.Sm4PasswordEncoder;
 import com.example.boot3.model.po.PermissionPO;
 import com.example.boot3.service.IPermissionService;
+import com.google.common.collect.ObjectArrays;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
@@ -59,7 +60,6 @@ public class SecurityConfiguration {
     private UserAccessDeniedHandler userAccessDeniedHandler;
     @Resource
     private UserAuthenticationEntryPoint userAuthenticationEntryPoint;
-    private static Map<String, ConfigAttribute> permissionMap = new ConcurrentHashMap<>();
     @Resource
     private SecurityProperties securityProperties;
     @Resource
@@ -68,6 +68,16 @@ public class SecurityConfiguration {
     private RedisService redisService;
     @Resource
     private AuthenticationJwtTokenFilter authenticationJwtTokenFilter;
+
+    /**
+     * 权限集
+     */
+    private static Map<String, ConfigAttribute> permissionMap = new ConcurrentHashMap<>();
+
+    /**
+     * 白名单
+     */
+    private static String[] whiteList = null;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -115,10 +125,21 @@ public class SecurityConfiguration {
     }
 
     /**
+     * 加载白名单
+     */
+    public void loadWhiteList() {
+        whiteList = ObjectArrays.concat(securityProperties.getApiWhitelist(), securityProperties.getStaticWhitelist(), String.class);
+    }
+
+    /**
      * Spring Security 过滤链
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        if (whiteList == null || whiteList.length == 0) {
+            loadWhiteList();
+        }
 
         return http
                 // 禁用明文验证
@@ -144,7 +165,7 @@ public class SecurityConfiguration {
                         // 允许所有的OPTIONS请求
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // 放行白名单
-                        .requestMatchers(HttpMethod.GET, securityProperties.getWhitelist().toArray(new String[0])).permitAll()
+                        .requestMatchers(HttpMethod.GET, whiteList).permitAll()
                         // 根据权限配置进行动态过滤
                         .anyRequest().access((authentication, object) -> {
                             // 如果没有权限资源则重新加载
@@ -156,7 +177,7 @@ public class SecurityConfiguration {
                             String path = URLUtil.getPath(requestURI);
                             PathMatcher pathMatcher = new AntPathMatcher();
                             // 白名单请求直接放行
-                            for (String url : securityProperties.getWhitelist()) {
+                            for (String url : whiteList) {
                                 if (pathMatcher.match(url, requestURI)) {
                                     return new AuthorizationDecision(YesNoEnum.YES.getValue());
                                 }

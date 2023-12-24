@@ -5,6 +5,8 @@ server:
 
 # ======== 数据源配置 ========
 spring:
+  application:
+    name: SpringBoot3.2.0
   datasource:
     # 数据库驱动
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -65,7 +67,7 @@ mybatis-plus:
     # 开启 Mybatis 二级缓存，默认为 true。
     cache-enabled: true
     # 日志输出实现。StdOutImpl 标准日志控制台输出
-    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       # 全局默认主键类型
@@ -73,12 +75,31 @@ mybatis-plus:
       # 表名是否使用驼峰转下划线命名,只对表名生效。 默认true
       table-underline: true
 
+# ======== Spring Boot Actuator 配置 ========
+management:
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+  endpoints:
+    #对web开启的监控点
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    # 下面选项建议打开，以监控 http 请求的 P99/P95 等，具体的时间分布可以根据实际情况设置
+    distribution:
+      sla:
+        http:
+          server:
+            requests: 1ms,5ms,10ms,50ms,100ms,200ms,500ms,1s,5s
+
 # ======== Security 配置 ========
 security:
   # SM4 加密密钥
   sk: 1234567890123456
-  # 白名单
-  whitelist:
+  # 静态资源
+  staticWhitelist:
     - /swagger-ui/**
     - /swagger-resources/**
     - /v2/**
@@ -93,6 +114,8 @@ security:
     - /**.gif
     - /**.ico
     - "/actuator/**"
+  # 接口信息
+  apiWhitelist:
     - "/user/register"
     - "/user/login"
 

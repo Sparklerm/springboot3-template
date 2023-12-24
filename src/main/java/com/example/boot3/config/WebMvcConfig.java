@@ -1,5 +1,6 @@
 package com.example.boot3.config;
 
+import com.example.boot3.common.log.BizLogHolderInterceptor;
 import com.example.boot3.config.security.component.SecurityDetailsContextInterceptor;
 import com.example.boot3.config.security.component.SecurityProperties;
 import jakarta.annotation.Resource;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Resource
+    private BizLogHolderInterceptor bizLogHolderInterceptor;
+    @Resource
     private SecurityDetailsContextInterceptor securityDetailsContextInterceptor;
 
     @Resource
@@ -27,8 +30,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 会话上下文拦截器
         registry.addInterceptor(securityDetailsContextInterceptor)
                 // 排除白名单
-                .excludePathPatterns(securityProperties.getWhitelist())
-                // 拦截路径
-                .addPathPatterns("/**");
+                .excludePathPatterns(securityProperties.getStaticWhitelist())
+                .excludePathPatterns(securityProperties.getApiWhitelist())
+                .addPathPatterns("/**")
+                .order(1);
+        // 业务日志拦截器
+        registry.addInterceptor(bizLogHolderInterceptor)
+                // 排除静态资源白名单
+                .excludePathPatterns(securityProperties.getStaticWhitelist())
+                .addPathPatterns("/**")
+                .order(2);
     }
 }
