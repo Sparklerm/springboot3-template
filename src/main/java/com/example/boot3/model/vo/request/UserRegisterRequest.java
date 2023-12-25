@@ -15,21 +15,21 @@ import java.io.Serializable;
  * @createDate 2023-12-23 23:14
  */
 @Data
-@Schema(name = "用户注册请求参数")
+@Schema(description = "用户注册请求参数")
 public class UserRegisterRequest implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "用户名")
+    @Schema(description = "用户名")
     @NotBlank(message = "用户名不能为空")
     private String username;
 
-    @Schema(name = "密码")
+    @Schema(description = "密码")
     @NotBlank(message = "密码不能为空")
     @Length(min = 6, max = 20, message = "密码长度为6-20位")
     private String password;
 
-    @Schema(name = "昵称")
+    @Schema(description = "昵称")
     private String nikeName;
 }

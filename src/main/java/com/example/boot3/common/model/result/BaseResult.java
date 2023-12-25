@@ -13,16 +13,16 @@ import java.io.Serializable;
  * @createDate 2020-11-13 13:17
  */
 @Data
-@Schema(name = "基础返回实体")
+@Schema(description = "基础返回实体")
 public class BaseResult implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "请求状态码")
+    @Schema(description = "请求状态码")
     private String code;
 
-    @Schema(name = "业务信息")
+    @Schema(description = "业务信息")
     private String message;
 
     public BaseResult() {
