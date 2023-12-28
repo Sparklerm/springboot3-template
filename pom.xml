@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>my-boot3</artifactId>
+    <groupId>com.yiyan</groupId>
+    <artifactId>springboot3-template</artifactId>
     <version>1.0.0</version>
-    <name>my-boot3</name>
-    <description>my-boot3</description>
+    <name>springboot3-template</name>
+    <description>Spring Boto 3.2.0 Template</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -144,6 +144,18 @@
 
     <build>
         <plugins>
+            <!-- 脚手架插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-archetype-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
