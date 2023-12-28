@@ -11,7 +11,7 @@ import com.example.boot3.common.utils.StrUtils;
 import com.example.boot3.common.utils.encrypt.EncryptUtils;
 import com.example.boot3.common.utils.redis.RedisService;
 import com.example.boot3.config.security.component.SecurityUserDetails;
-import com.example.boot3.dao.IAdminUserDao;
+import com.example.boot3.dao.IUserDao;
 import com.example.boot3.model.dto.UserLoginResultDTO;
 import com.example.boot3.model.po.UserPO;
 import com.example.boot3.service.IUserService;
@@ -30,11 +30,11 @@ import java.util.concurrent.TimeUnit;
  * @createDate 2023-12-23 22:39:27
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<IAdminUserDao, UserPO>
+public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
         implements IUserService {
 
     @Resource
-    private IAdminUserDao adminUserDao;
+    private IUserDao adminUserDao;
     @Resource
     private PasswordEncoder passwordEncoder;
     @Resource

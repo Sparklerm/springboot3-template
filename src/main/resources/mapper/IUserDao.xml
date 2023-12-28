@@ -2,15 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.boot3.dao.IAdminUserDao">
-
-    <sql id="Base_Column_List">
-        id, username, nick_name, password, status, create_time, update_time
-    </sql>
+<mapper namespace="com.example.boot3.dao.IUserDao">
 
     <select id="selectByUsername" resultType="com.example.boot3.model.po.UserPO">
-        select
-        <include refid="Base_Column_List"/>
+        select *
         from user u
         where u.username = #{username}
     </select>

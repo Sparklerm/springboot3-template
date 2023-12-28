@@ -2,9 +2,9 @@ package com.example.boot3.config.security.component;
 
 import com.example.boot3.common.enums.BizCodeEnum;
 import com.example.boot3.common.exception.BizAssert;
-import com.example.boot3.dao.IAdminUserDao;
 import com.example.boot3.dao.IPermissionDao;
 import com.example.boot3.dao.IRoleDao;
+import com.example.boot3.dao.IUserDao;
 import com.example.boot3.model.po.PermissionPO;
 import com.example.boot3.model.po.RolePO;
 import com.example.boot3.model.po.UserPO;
@@ -25,7 +25,7 @@ import java.util.List;
 public class SecurityUserDetailsService implements UserDetailsService {
 
     @Resource
-    private IAdminUserDao adminUserDao;
+    private IUserDao userDao;
     @Resource
     private IRoleDao roleDao;
     @Resource
@@ -34,7 +34,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 查询用户信息
-        UserPO adminUser = adminUserDao.selectByUsername(username);
+        UserPO adminUser = userDao.selectByUsername(username);
         BizAssert.notNull(adminUser, BizCodeEnum.USER_NOT_EXIST);
         // 查询用户角色信息
         List<RolePO> hasRole = roleDao.selectByUserId(adminUser.getId());

@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * @see UserPO
  */
 @Mapper
-public interface IAdminUserDao extends BaseMapper<UserPO> {
+public interface IUserDao extends BaseMapper<UserPO> {
     /**
      * 根据用户名查询用户信息
      *
