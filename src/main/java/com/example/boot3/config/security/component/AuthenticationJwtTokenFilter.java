@@ -17,6 +17,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -32,11 +34,23 @@ public class AuthenticationJwtTokenFilter extends OncePerRequestFilter {
     private SecurityUserDetailsService securityUserDetailsService;
     @Resource
     private RedisService redisService;
+    @Resource
+    private SecurityProperties securityProperties;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+        // 白名单请求直接放行
+        String requestURI = request.getRequestURI();
+        PathMatcher pathMatcher = new AntPathMatcher();
+        for (String url : securityProperties.getWhiteList()) {
+            if (pathMatcher.match(url, requestURI)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+        }
 
         String requestToken = request.getHeader(JwtUtils.getCurrentConfig().getHeader());
         // 读取请求头中的token

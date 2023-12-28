@@ -8,12 +8,12 @@ import com.example.boot3.common.exception.UserAccessDeniedHandler;
 import com.example.boot3.common.exception.UserAuthenticationEntryPoint;
 import com.example.boot3.common.utils.redis.RedisService;
 import com.example.boot3.config.security.component.AuthenticationJwtTokenFilter;
+import com.example.boot3.config.security.component.ResourcePathFilter;
 import com.example.boot3.config.security.component.SecurityProperties;
 import com.example.boot3.config.security.component.SecurityUserDetailsService;
 import com.example.boot3.config.security.component.Sm4PasswordEncoder;
 import com.example.boot3.model.po.PermissionPO;
 import com.example.boot3.service.IPermissionService;
-import com.google.common.collect.ObjectArrays;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
@@ -68,16 +68,13 @@ public class SecurityConfiguration {
     private RedisService redisService;
     @Resource
     private AuthenticationJwtTokenFilter authenticationJwtTokenFilter;
+    @Resource
+    private ResourcePathFilter resourcePathFilter;
 
     /**
      * 权限集
      */
     private static Map<String, ConfigAttribute> permissionMap = new ConcurrentHashMap<>();
-
-    /**
-     * 白名单
-     */
-    private static String[] whiteList = null;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -125,21 +122,12 @@ public class SecurityConfiguration {
     }
 
     /**
-     * 加载白名单
-     */
-    public void loadWhiteList() {
-        whiteList = ObjectArrays.concat(securityProperties.getApiWhitelist(), securityProperties.getStaticWhitelist(), String.class);
-    }
-
-    /**
      * Spring Security 过滤链
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        if (whiteList == null || whiteList.length == 0) {
-            loadWhiteList();
-        }
+        // 白名单获取
+        String[] whiteList = securityProperties.getWhiteList();
 
         return http
                 // 禁用明文验证
@@ -165,7 +153,7 @@ public class SecurityConfiguration {
                         // 允许所有的OPTIONS请求
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // 放行白名单
-                        .requestMatchers(HttpMethod.GET, whiteList).permitAll()
+                        .requestMatchers(whiteList).permitAll()
                         // 根据权限配置进行动态过滤
                         .anyRequest().access((authentication, object) -> {
                             // 如果没有权限资源则重新加载
@@ -210,8 +198,9 @@ public class SecurityConfiguration {
                         })
                 )
                 .userDetailsService(securityUserDetailsService)
-                // 添加自定义JWT过滤器
+                // 添加自定义过滤器
                 .addFilterBefore(authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(resourcePathFilter, AuthenticationJwtTokenFilter.class)
                 .build();
     }
 

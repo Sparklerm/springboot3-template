@@ -1,7 +1,5 @@
 server:
   port: 8080
-  servlet:
-    context-path: /
 
 # ======== 数据源配置 ========
 spring:
@@ -118,6 +116,7 @@ security:
   apiWhitelist:
     - "/user/register"
     - "/user/login"
+    - "/admin/getApiPaths"
 
 # ======== JWT密钥配置 ========
 jwt:

@@ -17,6 +17,7 @@ public enum BizCodeEnum implements StatusCodeEnumFormat {
     BIZ_ERROR("500", "通用业务异常"),
     UNAUTHORIZED("401", "认证失败请重新登录"),
     FORBIDDEN("403", "权限不足无法访问"),
+    RESOURCE_NOT_FOUNT("404", "请求资源不存在"),
     // === 系统异常
     PARAM_ERROR("1001", "参数错误"),
     LOCK_ERROR("1002", "获取锁失败"),

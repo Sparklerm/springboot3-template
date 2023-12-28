@@ -94,7 +94,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public ApiResult<String> exceptionHandler(HttpServletRequest req, Exception e) {
-        log.error("[ {} ] {} 未定义异常: {}", req.getMethod(), req.getRequestURL(), e.getMessage());
+        log.error("[ {} ] {} 未定义异常: {}", req.getMethod(), req.getRequestURL(), e.getLocalizedMessage());
         return ApiResult.error(BizCodeEnum.ERROR, e.getMessage());
     }
 }

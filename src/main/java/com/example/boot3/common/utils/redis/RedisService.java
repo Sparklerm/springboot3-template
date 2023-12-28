@@ -1,6 +1,6 @@
 package com.example.boot3.common.utils.redis;
 
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
 import org.redisson.api.RAtomicDouble;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RBucket;
@@ -9,7 +9,6 @@ import org.redisson.api.RMap;
 import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RSet;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -27,10 +26,10 @@ import java.util.concurrent.TimeUnit;
  * @createDate 2023-05-08 9:38
  */
 @Component
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class RedisService {
 
-    private final RedissonClient redissonClient;
+    @Resource
+    private RedissonClient redissonClient;
 
     // ============================= String类型操作 ============================
 
@@ -142,9 +141,21 @@ public class RedisService {
      * @param hashKeys hash键
      * @return 删除成功的数量
      */
-    public <T> long removeFromHash(String key, T... hashKeys) {
+    public <T> long removeFromHash(String key, List<T> hashKeys) {
         RMap<Object, T> hash = redissonClient.getMap(key);
         return hash.fastRemove(hashKeys);
+    }
+
+    /**
+     * 根据Key，删除Hash类型的数据
+     *
+     * @param key     键
+     * @param hashKey hash键
+     * @return 删除成功的数量
+     */
+    public <T> long removeFromHash(String key, T hashKey) {
+        RMap<Object, T> hash = redissonClient.getMap(key);
+        return hash.fastRemove(hashKey);
     }
 
     // ============================= List类型操作 ============================
@@ -169,6 +180,20 @@ public class RedisService {
     public <T> boolean addToList(String key, List<T> value) {
         RList<T> list = redissonClient.getList(key);
         return list.addAll(value);
+    }
+
+    /**
+     * 向List数据类型中添加值
+     *
+     * @param key      键
+     * @param value    值
+     * @param timeout  过期时间
+     * @param timeUnit 时间单位
+     */
+    public <T> boolean addToList(String key, List<T> value, long timeout, ChronoUnit timeUnit) {
+        RList<T> list = redissonClient.getList(key);
+        list.addAll(value);
+        return list.expire(Instant.now().plus(timeout, timeUnit));
     }
 
     /**
