@@ -18,13 +18,13 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Schema(name = "接口统一返回格式")
+@Schema(description = "接口统一返回格式")
 public class ApiResult<T> extends BaseResult implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "数据体")
+    @Schema(description = "数据体")
     private T data;
 
     private ApiResult() {

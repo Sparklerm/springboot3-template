@@ -404,7 +404,7 @@ public class RedisService {
      * @param end   结束位置
      * @return Set类型的值
      */
-    public <T> Set<Object> getFromZSet(String key, int start, int end) {
+    public <T> Set<T> getFromZSet(String key, int start, int end) {
         RScoredSortedSet<T> sortedSet = redissonClient.getScoredSortedSet(key);
         return new HashSet<>(sortedSet.valueRange(start, end));
     }
@@ -490,11 +490,10 @@ public class RedisService {
     /**
      * 递减操作
      *
-     * @param key   键
-     * @param delta 减少的值
+     * @param key 键
      * @return 递减后的值，如果键不存在，则返回-1
      */
-    public long decrement(String key, long delta) {
+    public long decrement(String key) {
         RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
         return atomicLong.decrementAndGet();
     }
@@ -509,18 +508,6 @@ public class RedisService {
     public double increment(String key, double delta) {
         RAtomicDouble atomicDouble = redissonClient.getAtomicDouble(key);
         return atomicDouble.addAndGet(delta);
-    }
-
-    /**
-     * 递减操作
-     *
-     * @param key   键
-     * @param delta 减少的值
-     * @return 递减后的值，如果键不存在，则返回-1
-     */
-    public double decrement(String key, double delta) {
-        RAtomicDouble atomicDouble = redissonClient.getAtomicDouble(key);
-        return atomicDouble.decrementAndGet();
     }
 }
 

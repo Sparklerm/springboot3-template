@@ -13,15 +13,15 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@Schema(name = "用户登录结果")
+@Schema(description = "用户登录结果")
 public class UserLoginResultDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "鉴权Token")
+    @Schema(description = "鉴权Token")
     private String accessToken;
 
-    @Schema(name = "刷新Token")
+    @Schema(description = "刷新Token")
     private String refreshToken;
 }
