@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.boot3.dao.IRoleDao">
+<mapper namespace="com.yiyan.boot3.dao.IRoleDao">
 
-    <select id="selectByUserId" resultType="com.example.boot3.model.po.RolePO">
+    <select id="selectByUserId" resultType="com.yiyan.boot3.model.po.RolePO">
         SELECT r.*
         FROM `role` r
                  LEFT JOIN user_role_relationship urr

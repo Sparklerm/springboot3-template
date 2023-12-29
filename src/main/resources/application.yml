@@ -64,7 +64,7 @@ spring:
 # ======== MybatisPlus配置 ========
 mybatis-plus:
   # 搜索指定包别名
-  type-aliases-package: com.example.boot3.model.po
+  type-aliases-package: com.yiyan.boot3.model.po
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapper-locations: classpath:mapper/**/*xml
   # 配置驼峰
