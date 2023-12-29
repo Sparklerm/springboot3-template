@@ -28,22 +28,12 @@ public class ThreadPoolConfig {
     @ConditionalOnMissingBean(ThreadPoolExecutor.class)
     public ExecutorService threadPoolExecutor(ThreadPoolConfigProperties properties) {
         // 实例化策略
-        RejectedExecutionHandler handler;
-        switch (properties.getPolicy()) {
-            case "DiscardPolicy":
-                handler = new ThreadPoolExecutor.DiscardPolicy();
-                break;
-            case "DiscardOldestPolicy":
-                handler = new ThreadPoolExecutor.DiscardOldestPolicy();
-                break;
-            case "CallerRunsPolicy":
-                handler = new ThreadPoolExecutor.CallerRunsPolicy();
-                break;
-            case "AbortPolicy":
-            default:
-                handler = new ThreadPoolExecutor.AbortPolicy();
-                break;
-        }
+        RejectedExecutionHandler handler = switch (properties.getPolicy()) {
+            case "DiscardPolicy" -> new ThreadPoolExecutor.DiscardPolicy();
+            case "DiscardOldestPolicy" -> new ThreadPoolExecutor.DiscardOldestPolicy();
+            case "CallerRunsPolicy" -> new ThreadPoolExecutor.CallerRunsPolicy();
+            default -> new ThreadPoolExecutor.AbortPolicy();
+        };
         ExecutorService threadPoolExecutor = new ThreadPoolExecutor(properties.getCorePoolSize(),
                 properties.getMaxPoolSize(),
                 properties.getKeepAliveTime(),

@@ -1,7 +1,7 @@
 package com.example.boot3.common.exception;
 
 import com.example.boot3.common.enums.BizCodeEnum;
-import com.example.boot3.common.enums.StatusCodeEnumFormat;
+import com.example.boot3.common.enums.BizCodeEnumFormat;
 import lombok.Getter;
 
 import java.io.Serial;
@@ -46,19 +46,19 @@ public class BizException extends RuntimeException {
         this.errorMessage = errorMessage;
     }
 
-    public BizException(StatusCodeEnumFormat errorInfoInterface) {
+    public BizException(BizCodeEnumFormat errorInfoInterface) {
         super(errorInfoInterface.getCode());
         this.errorCode = errorInfoInterface.getCode();
         this.errorMessage = errorInfoInterface.getMessage();
     }
 
-    public BizException(StatusCodeEnumFormat errorInfoInterface, String message) {
+    public BizException(BizCodeEnumFormat errorInfoInterface, String message) {
         super(errorInfoInterface.getCode());
         this.errorCode = errorInfoInterface.getCode();
         this.errorMessage = errorInfoInterface.getMessage() + " : " + message;
     }
 
-    public BizException(StatusCodeEnumFormat errorInfoInterface, Throwable cause) {
+    public BizException(BizCodeEnumFormat errorInfoInterface, Throwable cause) {
         super(errorInfoInterface.getCode(), cause);
         this.errorCode = errorInfoInterface.getCode();
         this.errorMessage = errorInfoInterface.getMessage();

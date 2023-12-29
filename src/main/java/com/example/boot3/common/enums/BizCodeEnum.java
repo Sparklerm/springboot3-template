@@ -11,7 +11,7 @@ import lombok.Getter;
  * @createDate 2022-11-9
  */
 @Getter
-public enum BizCodeEnum implements StatusCodeEnumFormat {
+public enum BizCodeEnum implements BizCodeEnumFormat {
     SUCCESS("200", "操作成功"),
     ERROR("-1", "操作失败"),
     BIZ_ERROR("500", "通用业务异常"),

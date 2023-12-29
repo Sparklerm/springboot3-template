@@ -2,7 +2,7 @@ package com.example.boot3.common.exception;
 
 
 import com.example.boot3.common.enums.BizCodeEnum;
-import com.example.boot3.common.enums.StatusCodeEnumFormat;
+import com.example.boot3.common.enums.BizCodeEnumFormat;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,14 +33,14 @@ public class BizAssert {
      *
      * @param errorCode the error code
      */
-    public static void error(StatusCodeEnumFormat errorCode) {
+    public static void error(BizCodeEnumFormat errorCode) {
         throw new BizException(errorCode);
     }
 
     /**
      * error.
      */
-    public static void error(StatusCodeEnumFormat errorCode, String message) {
+    public static void error(BizCodeEnumFormat errorCode, String message) {
         throw new BizException(errorCode, message);
     }
 
@@ -60,13 +60,13 @@ public class BizAssert {
         }
     }
 
-    public static void error(boolean flag, StatusCodeEnumFormat errorCode) {
+    public static void error(boolean flag, BizCodeEnumFormat errorCode) {
         if (flag) {
             throw new BizException(errorCode);
         }
     }
 
-    public static void isNull(@Nullable Object object, StatusCodeEnumFormat status) {
+    public static void isNull(@Nullable Object object, BizCodeEnumFormat status) {
         if (null != object) {
             throw new BizException(status);
         }
@@ -78,7 +78,7 @@ public class BizAssert {
         }
     }
 
-    public static void notNull(@Nullable Object object, StatusCodeEnumFormat status) {
+    public static void notNull(@Nullable Object object, BizCodeEnumFormat status) {
         if (ObjectUtils.isEmpty(object)) {
             throw new BizException(status);
         }
@@ -90,7 +90,7 @@ public class BizAssert {
         }
     }
 
-    public static void notBlank(String object, StatusCodeEnumFormat status) {
+    public static void notBlank(String object, BizCodeEnumFormat status) {
         if (StringUtils.isBlank(object)) {
             throw new BizException(status);
         }
@@ -108,7 +108,7 @@ public class BizAssert {
         }
     }
 
-    public static void isTrue(boolean flag, StatusCodeEnumFormat status) {
+    public static void isTrue(boolean flag, BizCodeEnumFormat status) {
         if (!flag) {
             throw new BizException(status);
         }
@@ -120,7 +120,7 @@ public class BizAssert {
         }
     }
 
-    public static void isFalse(boolean flag, StatusCodeEnumFormat status) {
+    public static void isFalse(boolean flag, BizCodeEnumFormat status) {
         if (flag) {
             throw new BizException(status);
         }

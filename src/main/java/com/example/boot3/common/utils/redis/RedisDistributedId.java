@@ -2,14 +2,17 @@ package com.example.boot3.common.utils.redis;
 
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Redis 分布式ID生成器
@@ -17,6 +20,7 @@ import java.time.format.DateTimeFormatter;
  * @author Alex Meng
  * @createDate 2023-05-15 14:37
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class RedisDistributedId {
@@ -107,12 +111,14 @@ public class RedisDistributedId {
     public synchronized long nextIdByIncrementOnDay(String idSegmentKey) {
         // 判断Redis中是否存在该key
         if (!redissonClient.getAtomicLong(idSegmentKey).isExists()) {
-            // 不存在，设置为0
-            redissonClient.getAtomicLong(idSegmentKey).set(0);
-            // 设置过期时间为当天的最后一秒
+            // 不存在，设置为1
+            redissonClient.getAtomicLong(idSegmentKey).set(1);
+            // 获取当前时间
             LocalDateTime now = LocalDateTime.now();
-            LocalDateTime endOfDay = now.withHour(23).withMinute(59).withSecond(59);
-            redissonClient.getAtomicLong(idSegmentKey).expireAt(endOfDay.toInstant(ZoneOffset.of("+8")).toEpochMilli());
+            // 获取当天的最后一秒
+            LocalDateTime endOfDay = now.truncatedTo(ChronoUnit.DAYS).plusSeconds(1);
+            Duration expireTime = Duration.between(endOfDay, now);
+            redissonClient.getAtomicLong(idSegmentKey).expire(expireTime);
         }
         return redissonClient.getAtomicLong(idSegmentKey).getAndIncrement();
     }
