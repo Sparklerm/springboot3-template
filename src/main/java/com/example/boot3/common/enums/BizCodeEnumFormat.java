@@ -6,7 +6,7 @@ package com.example.boot3.common.enums;
  * @author Alex Meng
  * @createDate 2023 -04-21 14:52
  */
-public interface StatusCodeEnumFormat {
+public interface BizCodeEnumFormat {
     /**
      * Gets code.
      *
