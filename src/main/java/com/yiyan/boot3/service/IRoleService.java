@@ -10,4 +10,11 @@ import com.yiyan.boot3.model.po.RolePO;
  */
 public interface IRoleService extends IService<RolePO> {
 
+    /**
+     * 添加角色
+     *
+     * @param role 角色信息
+     * @return 创建后的角色信息
+     */
+    RolePO add(RolePO role);
 }

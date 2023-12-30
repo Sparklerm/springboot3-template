@@ -69,6 +69,4 @@ public class UserController {
         adminUserService.logout(user.getUsername());
         return ApiResult.success("退出登录成功");
     }
-
-
 }
