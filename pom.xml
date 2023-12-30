@@ -13,6 +13,7 @@
 
     <modules>
         <module>springboot3-app</module>
+        <module>springboot3-template-archetype</module>
     </modules>
 
 </project>
