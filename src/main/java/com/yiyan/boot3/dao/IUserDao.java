@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * @author alex meng
- * @description 针对表【admin_user(管理员用户表)】的数据库操作Mapper
+ * @description 针对表【user(用户表)】的数据库操作Mapper
  * @createDate 2023-12-23 22:39:27
  * @see UserPO
  */

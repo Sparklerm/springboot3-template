@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import com.yiyan.boot3.common.constants.BizConstant;
 import com.yiyan.boot3.common.constants.RedisCacheKey;
 import com.yiyan.boot3.common.enums.BizCodeEnum;
+import com.yiyan.boot3.common.enums.YesNoEnum;
 import com.yiyan.boot3.common.exception.BizAssert;
 import com.yiyan.boot3.common.utils.JsonUtils;
 import com.yiyan.boot3.common.utils.JwtUtils;
@@ -37,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author alex meng
- * @description 针对表【admin_user(管理员用户表)】的数据库操作Service实现
+ * @description 针对表【user(用户表)】的数据库操作Service实现
  * @createDate 2023-12-23 22:39:27
  */
 @Service
@@ -45,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
         implements IUserService {
 
     @Resource
-    private IUserDao adminUserDao;
+    private IUserDao userDao;
     @Resource
     private PasswordEncoder passwordEncoder;
     @Resource
@@ -62,15 +63,37 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
     @Override
     public UserPO register(String username, String password, String nikeName) {
         // 查询是否有相同用户名的用户
-        UserPO hasUser = adminUserDao.selectByUsername(username);
+        UserPO hasUser = userDao.selectByUsername(username);
         BizAssert.isNull(hasUser, BizCodeEnum.USERNAME_ALREADY_REGISTER);
-        // 注册用户
-        UserPO adminUser = new UserPO();
-        adminUser.setUsername(username);
-        adminUser.setNickName(nikeName);
-        adminUser.setPassword(passwordEncoder.encode(password));
-        adminUserDao.insert(adminUser);
-        return adminUser;
+        // 组装新用户参数
+        UserPO user = new UserPO();
+        user.setUsername(username);
+        user.setNickName(nikeName);
+        user.setPassword(passwordEncoder.encode(password));
+        transactionTemplate.execute((status -> {
+            // 注册用户
+            userDao.insert(user);
+            // 查询默认角色
+            Wrapper<RolePO> wrapper = new LambdaQueryWrapper<>(RolePO.class)
+                    .eq(RolePO::getIsDefault, YesNoEnum.YES.getKey());
+            List<Long> defaultRoles = roleDao.selectList(wrapper).stream().map(RolePO::getId).toList();
+            List<UserRoleRelationshipPO> relationships = getUserRoleRelationshipList(defaultRoles, user.getId());
+            // 绑定默认角色
+            relationships.forEach(row -> userRoleRelationshipDao.insert(row));
+            return Boolean.TRUE;
+        }));
+        return user;
+    }
+
+    private static List<UserRoleRelationshipPO> getUserRoleRelationshipList(List<Long> roleIds, Long userId) {
+        List<UserRoleRelationshipPO> relationships = new ArrayList<>(roleIds.size());
+        roleIds.forEach(roleId -> {
+            UserRoleRelationshipPO relationship = new UserRoleRelationshipPO();
+            relationship.setUserId(userId);
+            relationship.setRoleId(roleId);
+            relationships.add(relationship);
+        });
+        return relationships;
     }
 
     @Override
@@ -116,13 +139,7 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
         Sets.SetView<Long> difference =
                 Sets.difference(new HashSet<>(roleIds), new HashSet<>(hasRoleIds));
         // 组装关系对象
-        List<UserRoleRelationshipPO> relationships = new ArrayList<>(difference.size());
-        difference.forEach(permissionId -> {
-            UserRoleRelationshipPO relationship = new UserRoleRelationshipPO();
-            relationship.setUserId(id);
-            relationship.setRoleId(permissionId);
-            relationships.add(relationship);
-        });
+        List<UserRoleRelationshipPO> relationships = getUserRoleRelationshipList(difference.stream().toList(), id);
         // 数据插入
         transactionTemplate.execute((status) -> {
             relationships.forEach(row -> userRoleRelationshipDao.insert(row));

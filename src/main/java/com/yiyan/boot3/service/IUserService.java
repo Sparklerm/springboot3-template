@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author alex meng
- * @description 针对表【admin_user(管理员用户表)】的数据库操作Service
+ * @description 针对表【user(用户表)】的数据库操作Service
  * @createDate 2023-12-23 22:39:27
  */
 public interface IUserService extends IService<UserPO> {
