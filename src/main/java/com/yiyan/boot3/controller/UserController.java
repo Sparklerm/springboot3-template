@@ -41,9 +41,15 @@ public class UserController {
 
     @Operation(summary = "用户注册")
     @PostMapping("/register")
-    public ApiResult<String> register(@RequestBody @Valid UserRegisterRequest request) {
-        userService.register(request.getUsername(), request.getPassword(), request.getNikeName());
-        return ApiResult.success("用户注册成功");
+    public ApiResult<CurrentUserResponse> register(@RequestBody @Valid UserRegisterRequest request) {
+        UserPO register =
+                userService.register(request.getUsername(), request.getPassword(), request.getNikeName());
+        // 注册结果
+        CurrentUserResponse currentUser = new CurrentUserResponse();
+        currentUser.setId(register.getId());
+        currentUser.setUsername(register.getUsername());
+        currentUser.setNickName(register.getNickName());
+        return ApiResult.created(currentUser);
     }
 
     @Operation(summary = "用户登录")

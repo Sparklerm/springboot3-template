@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @EnableConfigurationProperties(ThreadPoolConfigProperties.class)
 public class ThreadPoolConfig {
 
-    @Bean
+    @Bean("taskPool")
     @ConditionalOnMissingBean(ThreadPoolExecutor.class)
     public ExecutorService threadPoolExecutor(ThreadPoolConfigProperties properties) {
         // 实例化策略

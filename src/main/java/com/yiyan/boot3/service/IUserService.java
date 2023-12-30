@@ -21,7 +21,7 @@ public interface IUserService extends IService<UserPO> {
      * @param nikeName 昵称
      * @return 注册结果
      */
-    Integer register(String username, String password, String nikeName);
+    UserPO register(String username, String password, String nikeName);
 
     /**
      * 用户登录
@@ -48,7 +48,21 @@ public interface IUserService extends IService<UserPO> {
      */
     List<RolePO> getRole(Long id);
 
+    /**
+     * 用户绑定角色
+     *
+     * @param id      用户Id
+     * @param roleIds 角色Id
+     * @return 绑定结果
+     */
     Integer bindRole(Long id, List<Long> roleIds);
 
+    /**
+     * 用户解绑角色
+     *
+     * @param id      用户Id
+     * @param roleIds 角色Id
+     * @return 解绑结果
+     */
     Integer unbindRole(Long id, List<Long> roleIds);
 }

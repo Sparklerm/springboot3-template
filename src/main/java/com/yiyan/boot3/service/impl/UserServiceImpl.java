@@ -60,7 +60,7 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
     private IUserRoleRelationshipDao userRoleRelationshipDao;
 
     @Override
-    public Integer register(String username, String password, String nikeName) {
+    public UserPO register(String username, String password, String nikeName) {
         // 查询是否有相同用户名的用户
         UserPO hasUser = adminUserDao.selectByUsername(username);
         BizAssert.isNull(hasUser, BizCodeEnum.USERNAME_ALREADY_REGISTER);
@@ -69,7 +69,8 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
         adminUser.setUsername(username);
         adminUser.setNickName(nikeName);
         adminUser.setPassword(passwordEncoder.encode(password));
-        return adminUserDao.insert(adminUser);
+        adminUserDao.insert(adminUser);
+        return adminUser;
     }
 
     @Override

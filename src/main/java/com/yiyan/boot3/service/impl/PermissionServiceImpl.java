@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yiyan.boot3.common.enums.BizCodeEnum;
 import com.yiyan.boot3.common.exception.BizAssert;
 import com.yiyan.boot3.dao.IPermissionDao;
+import com.yiyan.boot3.model.event.SecurityPermissionEvent;
 import com.yiyan.boot3.model.po.PermissionPO;
 import com.yiyan.boot3.service.IPermissionService;
 import jakarta.annotation.Resource;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +24,8 @@ public class PermissionServiceImpl extends ServiceImpl<IPermissionDao, Permissio
 
     @Resource
     private IPermissionDao permissionDao;
+    @Resource
+    private ApplicationEventPublisher eventPublisher;
 
     @Override
     public PermissionPO add(PermissionPO permission) {
@@ -31,7 +35,10 @@ public class PermissionServiceImpl extends ServiceImpl<IPermissionDao, Permissio
         PermissionPO permissionPO = permissionDao.selectOne(wrapper);
         BizAssert.isNull(permissionPO, BizCodeEnum.PERMISSION_ALREADY_EXISTS);
         // 创建权限
-        permissionDao.insert(permission);
+        int insert = permissionDao.insert(permission);
+        if (insert > 0) {
+            eventPublisher.publishEvent(new SecurityPermissionEvent());
+        }
         return permission;
     }
 }
