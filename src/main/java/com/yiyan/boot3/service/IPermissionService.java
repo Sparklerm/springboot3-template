@@ -10,4 +10,9 @@ import com.yiyan.boot3.model.po.PermissionPO;
  */
 public interface IPermissionService extends IService<PermissionPO> {
 
+    /**
+     * @param permission 权限信息
+     * @return 创建后的权限信息
+     */
+    PermissionPO add(PermissionPO permission);
 }

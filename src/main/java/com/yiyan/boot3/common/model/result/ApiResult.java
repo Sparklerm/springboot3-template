@@ -1,9 +1,10 @@
 package com.yiyan.boot3.common.model.result;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yiyan.boot3.common.constants.BizConstant;
 import com.yiyan.boot3.common.enums.BizCodeEnum;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yiyan.boot3.common.enums.YesNoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,13 +31,13 @@ public class ApiResult<T> extends BaseResult implements Serializable {
     private ApiResult() {
     }
 
-    public ApiResult(String code, String message, T data) {
-        super(code, message);
+    public ApiResult(String code, String message, boolean success, T data) {
+        super(code, message, success);
         this.data = data;
     }
 
     public static <T> ApiResult<T> success(String code, String message, T data) {
-        return new ApiResult<>(code, message, data);
+        return new ApiResult<>(code, message, YesNoEnum.YES.getValue(), data);
     }
 
     public static <T> ApiResult<T> success(BizCodeEnum status, T data) {
@@ -55,38 +56,8 @@ public class ApiResult<T> extends BaseResult implements Serializable {
         return success(BizCodeEnum.SUCCESS, null);
     }
 
-    public static ApiResult<String> createSuccess() {
-        return new ApiResult<>(BizCodeEnum.SUCCESS.getCode(), BizCodeEnum.SUCCESS.getMessage(), BizConstant.DEFAULT_CREATE_OPTION_SUCCESS_MESSAGE);
-    }
-
-    public static <T> ApiResult<String> createSuccess(T data) {
-        return new ApiResult<>(BizCodeEnum.SUCCESS.getCode(),
-                BizCodeEnum.SUCCESS.getMessage(),
-                BizConstant.DEFAULT_CREATE_OPTION_SUCCESS_MESSAGE + " : " + data);
-    }
-
-    public static ApiResult<String> updateSuccess() {
-        return new ApiResult<>(BizCodeEnum.SUCCESS.getCode(), BizCodeEnum.SUCCESS.getMessage(), BizConstant.DEFAULT_UPDATE_OPTION_SUCCESS_MESSAGE);
-    }
-
-    public static <T> ApiResult<String> updateSuccess(T data) {
-        return new ApiResult<>(BizCodeEnum.SUCCESS.getCode(),
-                BizCodeEnum.SUCCESS.getMessage(),
-                BizConstant.DEFAULT_UPDATE_OPTION_SUCCESS_MESSAGE + " : " + data);
-    }
-
-    public static ApiResult<String> deleteSuccess() {
-        return new ApiResult<>(BizCodeEnum.SUCCESS.getCode(), BizCodeEnum.SUCCESS.getMessage(), BizConstant.DEFAULT_DELETE_OPTION_SUCCESS_MESSAGE);
-    }
-
-    public static <T> ApiResult<String> deleteSuccess(T data) {
-        return new ApiResult<>(BizCodeEnum.SUCCESS.getCode(),
-                BizCodeEnum.SUCCESS.getMessage(),
-                BizConstant.DEFAULT_DELETE_OPTION_SUCCESS_MESSAGE + " : " + data);
-    }
-
     public static <T> ApiResult<T> error(String code, String message, T data) {
-        return new ApiResult<>(code, message, data);
+        return new ApiResult<>(code, message, YesNoEnum.NO.getValue(), data);
     }
 
     public static <T> ApiResult<T> error(String code, String message) {
@@ -109,7 +80,34 @@ public class ApiResult<T> extends BaseResult implements Serializable {
         return error(BizCodeEnum.ERROR, null);
     }
 
-    // ==================== 以下为分页返回 ====================
+
+    // ==================== 特定操作类型返回 ====================
+
+    public static ApiResult<String> created() {
+        return success(BizConstant.DEFAULT_CREATE_OPTION_SUCCESS_MESSAGE);
+    }
+
+    public static <T> ApiResult<T> created(T data) {
+        return success(data);
+    }
+
+    public static ApiResult<String> updated() {
+        return success(BizConstant.DEFAULT_UPDATE_OPTION_SUCCESS_MESSAGE);
+    }
+
+    public static <T> ApiResult<T> updated(T data) {
+        return success(data);
+    }
+
+    public static ApiResult<String> deleted() {
+        return success(BizConstant.DEFAULT_DELETE_OPTION_SUCCESS_MESSAGE);
+    }
+
+    public static <T> ApiResult<T> deleted(T data) {
+        return success(data);
+    }
+
+    // ==================== 以下为分页数据封装返回 ====================
 
     public static <T> ApiResult<PageResultRecord<T>> success(IPage<T> data) {
         return success(PageResultRecord.page2Result(data));

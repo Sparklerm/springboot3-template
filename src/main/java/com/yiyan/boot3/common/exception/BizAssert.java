@@ -67,13 +67,13 @@ public class BizAssert {
     }
 
     public static void isNull(@Nullable Object object, BizCodeEnumFormat status) {
-        if (null != object) {
+        if (ObjectUtils.isNotEmpty(object)) {
             throw new BizException(status);
         }
     }
 
     public static void isNull(@Nullable Object object, String message) {
-        if (null != object) {
+        if (ObjectUtils.isNotEmpty(object)) {
             throw new BizException(message);
         }
     }

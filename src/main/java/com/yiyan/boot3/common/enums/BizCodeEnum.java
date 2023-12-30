@@ -27,7 +27,8 @@ public enum BizCodeEnum implements BizCodeEnumFormat {
     SECURITY_USER_IS_DISABLED("2002", "用户已被禁用"),
     USERNAME_ALREADY_REGISTER("2003", "用户名已注册"),
     USER_NOT_EXIST("2004", "用户不存在"),
-    ;
+    PERMISSION_ALREADY_EXISTS("2005", "权限已存在"),
+    PERMISSION_NOT_EXIST("2006", "权限不存在");
 
     /**
      * 状态码

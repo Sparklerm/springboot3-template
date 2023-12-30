@@ -7,6 +7,7 @@ import com.yiyan.boot3.model.dto.UserLoginResultDTO;
 import com.yiyan.boot3.model.po.UserPO;
 import com.yiyan.boot3.model.vo.request.UserLoginRequest;
 import com.yiyan.boot3.model.vo.request.UserRegisterRequest;
+import com.yiyan.boot3.model.vo.response.CurrentUserResponse;
 import com.yiyan.boot3.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -48,10 +49,16 @@ public class UserController {
 
     @Operation(summary = "获取当前登录用户信息")
     @GetMapping("/current")
-    public ApiResult<UserPO> current() {
+    public ApiResult<CurrentUserResponse> current() {
+        // 获取鉴权用户信息
         SecurityUserDetails userDetails = SecurityDetailsContextHolder.getContext();
         UserPO user = userDetails.getUser();
-        return ApiResult.success(user);
+        // 用户信息返回
+        CurrentUserResponse currentUser = new CurrentUserResponse();
+        currentUser.setId(user.getId());
+        currentUser.setUsername(user.getUsername());
+        currentUser.setNickName(user.getNickName());
+        return ApiResult.success(currentUser);
     }
 
     @Operation(summary = "退出登录")
@@ -62,4 +69,6 @@ public class UserController {
         adminUserService.logout(user.getUsername());
         return ApiResult.success("退出登录成功");
     }
+
+
 }

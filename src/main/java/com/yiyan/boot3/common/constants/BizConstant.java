@@ -27,15 +27,15 @@ public class BizConstant {
     /**
      * 默认创建数据操作成功提示信息
      */
-    public static final String DEFAULT_CREATE_OPTION_SUCCESS_MESSAGE = "数据创建成功";
+    public static final String DEFAULT_CREATE_OPTION_SUCCESS_MESSAGE = "创建操作成功";
     /**
      * 默认更新数据操作成功提示信息
      */
-    public static final String DEFAULT_UPDATE_OPTION_SUCCESS_MESSAGE = "数据更新成功";
+    public static final String DEFAULT_UPDATE_OPTION_SUCCESS_MESSAGE = "更新操作成功";
     /**
      * 默认删除数据操作成功提示信息
      */
-    public static final String DEFAULT_DELETE_OPTION_SUCCESS_MESSAGE = "数据删除成功";
+    public static final String DEFAULT_DELETE_OPTION_SUCCESS_MESSAGE = "删除操作成功";
 
     private BizConstant() {
     }

@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Data
 @Schema(description = "用户登录请求参数")
 public class UserLoginRequest implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
 

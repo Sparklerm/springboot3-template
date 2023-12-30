@@ -25,11 +25,20 @@ public class BaseResult implements Serializable {
     @Schema(description = "业务信息")
     private String message;
 
+    @Schema(description = "请求结果")
+    private Boolean success;
+
     public BaseResult() {
     }
 
     public BaseResult(String code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public BaseResult(String code, String message, boolean success) {
+        this.code = code;
+        this.message = message;
+        this.success = success;
     }
 }
