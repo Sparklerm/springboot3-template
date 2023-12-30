@@ -118,7 +118,7 @@ public class RoleController {
     }
 
     @Operation(summary = "角色绑定权限")
-    @PostMapping("/bind/{id}")
+    @PostMapping("/permission/{id}/bind")
     public ApiResult<Integer> bindPermission(@PathVariable("id") Long id, @RequestBody List<Long> permissionIds) {
         // 判断角色是否存在
         RolePO role = roleService.getById(id);
@@ -129,7 +129,7 @@ public class RoleController {
     }
 
     @Operation(summary = "角色解绑权限")
-    @PostMapping("/unbind/{id}")
+    @PostMapping("/permission/{id}/unbind")
     public ApiResult<Integer> unbindPermission(@PathVariable("id") Long id, @RequestBody List<Long> permissionIds) {
         // 判断角色是否存在
         RolePO role = roleService.getById(id);

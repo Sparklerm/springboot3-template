@@ -1,6 +1,9 @@
 package com.yiyan.boot3.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Sets;
 import com.yiyan.boot3.common.constants.BizConstant;
 import com.yiyan.boot3.common.constants.RedisCacheKey;
 import com.yiyan.boot3.common.enums.BizCodeEnum;
@@ -11,9 +14,13 @@ import com.yiyan.boot3.common.utils.StrUtils;
 import com.yiyan.boot3.common.utils.encrypt.EncryptUtils;
 import com.yiyan.boot3.common.utils.redis.RedisService;
 import com.yiyan.boot3.config.security.component.SecurityUserDetails;
+import com.yiyan.boot3.dao.IRoleDao;
 import com.yiyan.boot3.dao.IUserDao;
+import com.yiyan.boot3.dao.IUserRoleRelationshipDao;
 import com.yiyan.boot3.model.dto.UserLoginResultDTO;
+import com.yiyan.boot3.model.po.RolePO;
 import com.yiyan.boot3.model.po.UserPO;
+import com.yiyan.boot3.model.po.UserRoleRelationshipPO;
 import com.yiyan.boot3.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +28,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,6 +52,12 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
     private AuthenticationManager authenticationManager;
     @Resource
     private RedisService redisService;
+    @Resource
+    private IRoleDao roleDao;
+    @Resource
+    private TransactionTemplate transactionTemplate;
+    @Resource
+    private IUserRoleRelationshipDao userRoleRelationshipDao;
 
     @Override
     public Integer register(String username, String password, String nikeName) {
@@ -83,6 +100,59 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, UserPO>
     public void logout(String username) {
         // 在Redis中删除用户鉴权Token
         redisService.remove(StrUtils.format(RedisCacheKey.AdminUser.USER_TOKEN, username));
+    }
+
+    @Override
+    public List<RolePO> getRole(Long id) {
+        return roleDao.selectByUserId(id);
+    }
+
+    @Override
+    public Integer bindRole(Long id, List<Long> roleIds) {
+        // 查询用户当前已有角色
+        List<Long> hasRoleIds = getHasRoleIds(id);
+        // 获取需要绑定的权限
+        Sets.SetView<Long> difference =
+                Sets.difference(new HashSet<>(roleIds), new HashSet<>(hasRoleIds));
+        // 组装关系对象
+        List<UserRoleRelationshipPO> relationships = new ArrayList<>(difference.size());
+        difference.forEach(permissionId -> {
+            UserRoleRelationshipPO relationship = new UserRoleRelationshipPO();
+            relationship.setUserId(id);
+            relationship.setRoleId(permissionId);
+            relationships.add(relationship);
+        });
+        // 数据插入
+        transactionTemplate.execute((status) -> {
+            relationships.forEach(row -> userRoleRelationshipDao.insert(row));
+            return Boolean.TRUE;
+        });
+        return relationships.size();
+    }
+
+    @Override
+    public Integer unbindRole(Long id, List<Long> roleIds) {
+        // 查询用户当前已有角色
+        List<Long> hasRoleIds = getHasRoleIds(id);
+        // 获取需要绑定的权限
+        Sets.SetView<Long> intersection =
+                Sets.intersection(new HashSet<>(roleIds), new HashSet<>(hasRoleIds));
+        // 解绑角色，数据更新
+        transactionTemplate.execute((status -> {
+            intersection.forEach(roleId -> {
+                Wrapper<UserRoleRelationshipPO> deleteWrapper = new LambdaQueryWrapper<>(UserRoleRelationshipPO.class)
+                        .eq(UserRoleRelationshipPO::getUserId, id)
+                        .eq(UserRoleRelationshipPO::getRoleId, roleId);
+                userRoleRelationshipDao.delete(deleteWrapper);
+            });
+            return Boolean.TRUE;
+        }));
+        return intersection.size();
+    }
+
+    private List<Long> getHasRoleIds(Long id) {
+        List<RolePO> hasRoles = getRole(id);
+        return hasRoles.stream().map(RolePO::getId).toList();
     }
 }
 

@@ -2,7 +2,10 @@ package com.yiyan.boot3.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yiyan.boot3.model.dto.UserLoginResultDTO;
+import com.yiyan.boot3.model.po.RolePO;
 import com.yiyan.boot3.model.po.UserPO;
+
+import java.util.List;
 
 /**
  * @author alex meng
@@ -35,4 +38,17 @@ public interface IUserService extends IService<UserPO> {
      * @param username 用户名
      */
     void logout(String username);
+
+
+    /**
+     * 查询用户角色信息
+     *
+     * @param id 用户Id
+     * @return 用户角色
+     */
+    List<RolePO> getRole(Long id);
+
+    Integer bindRole(Long id, List<Long> roleIds);
+
+    Integer unbindRole(Long id, List<Long> roleIds);
 }
