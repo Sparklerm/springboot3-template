@@ -10,19 +10,13 @@ server:
       min-spare: 10   # 初始化线程数,最小空闲线程数,默认是10
     accept-count: 500  # 等待队列长度
 
-# ======== 数据源配置 ========
 spring:
   application:
     name: SpringBoot3.2.0
+  profiles:
+    active: dev
+    default: dev
   datasource:
-    # 数据库驱动
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # 数据库连接地址
-    url: jdbc:mysql://localhost:3306/boot3?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
-    # 数据库用户名
-    username: root
-    # 数据库密码
-    password: 123456
     # ======== HikariCP连接池配置 ========
     hikari:
       # 连接池名称，可选
@@ -56,11 +50,6 @@ spring:
       # 连接初始化 SQL
       connection-init-sql: "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-  # ======== Redis配置 ========
-  redis:
-    redisson:
-      file: classpath:redisson.yaml
-
 # ======== MybatisPlus配置 ========
 mybatis-plus:
   # 搜索指定包别名
@@ -81,14 +70,6 @@ mybatis-plus:
       id-type: assign_id
       # 表名是否使用驼峰转下划线命名,只对表名生效。 默认true
       table-underline: true
-
-# ======== JWT密钥配置 ========
-jwt:
-  secret: 1234567890123456
-  expirationTime: 604800
-  issuer: boot
-  header: Authorization
-  tokenHead: Bearer
 
 # ======== 线程池配置 ========
 thread:
@@ -122,8 +103,6 @@ management:
 
 # ======== Security 配置 ========
 security:
-  # SM4 加密密钥
-  sk: 1234567890123456
   # 静态资源
   staticWhitelist:
     - /swagger-ui/**
