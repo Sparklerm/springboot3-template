@@ -1,6 +1,5 @@
 # Tomcat 线程配置
 server:
-  # 1核2G内存，可默认配置 200；4核8G内存【accept-count=1000、max-threads=800、max-connections=10000】，线程数经验值800。线程池过大，cpu调度会消耗大量时间
   tomcat:
     mbeanregistry:
       enabled: true
@@ -14,13 +13,24 @@ server:
     # 等待队列长度，默认100
     accept-count: 500
 
+# ======== 任务线程池配置 ========
+thread:
+  pool:
+    executor:
+      config:
+        core-pool-size: 20
+        max-pool-size: 50
+        keep-alive-time: 5000
+        block-queue-size: 5000
+        policy: CallerRunsPolicy
+
 # ======== 数据源配置 ========
 spring:
   datasource:
     # 数据库驱动
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 数据库连接地址
-    url: jdbc:mysql://localhost:3306/boot3?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/boot3?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
     # 数据库用户名
     username: root
     # 数据库密码
@@ -28,7 +38,7 @@ spring:
   # ======== Redis配置 ========
   redis:
     redisson:
-      file: classpath:redisson-dev.yaml
+      file: classpath:redisson/redisson-dev.yaml
 
 # ======== Security 配置 ========
 security:

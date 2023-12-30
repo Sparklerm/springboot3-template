@@ -14,7 +14,7 @@ keepPubSubOrder: true
 # Redisson 单实例配置
 singleServerConfig:
   # 节点地址。格式：redis://host:port
-  address: "redis://10.0.16.14:6379"
+  address: "redis://redis:6379"
   # 密码。默认值: null
   password: 8*%u3Td#oV!yD9L7
   # 数据库编号。默认值: 0

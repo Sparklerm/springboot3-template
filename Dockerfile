@@ -7,7 +7,8 @@ WORKDIR /app/
 ADD ./target/*.jar /app/app.jar
 
 # 时区
-ENV TZ=Asia/Shanghai
+ENV TZ=RPC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 设置暴露的端口号
 EXPOSE 8080
@@ -24,4 +25,4 @@ ENV JAVA_OPTS="\
 -XX:HeapDumpPath=/app/logs/dump/dumpfile.hprof"
 
 # Jar包启动命令
-ENTRYPOINT java ${JAVA_OPTS} -jar app.jar --server.port=8080
+ENTRYPOINT ["sh","-c","java ${JAVA_OPTS} -jar app.jar --server.port=8080"]

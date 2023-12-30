@@ -1,15 +1,6 @@
 server:
   port: 8080
-  # 1核2G内存，可默认配置 200；4核8G内存【accept-count=1000、max-threads=800、max-connections=10000】，线程数经验值800。线程池过大，cpu调度会消耗大量时间
-  tomcat:
-    mbeanregistry:
-      enabled: true
-    max-connections: 5000 # 最大连接数
-    threads:
-      max: 400         # 设定处理客户请求的线程的最大数目，决定了服务器可以同时响应客户请求的数,默认200
-      min-spare: 10   # 初始化线程数,最小空闲线程数,默认是10
-    accept-count: 500  # 等待队列长度
-
+  
 spring:
   application:
     name: SpringBoot3.2.0
@@ -71,17 +62,6 @@ mybatis-plus:
       # 表名是否使用驼峰转下划线命名,只对表名生效。 默认true
       table-underline: true
 
-# ======== 线程池配置 ========
-thread:
-  pool:
-    executor:
-      config:
-        core-pool-size: 20
-        max-pool-size: 50
-        keep-alive-time: 5000
-        block-queue-size: 5000
-        policy: CallerRunsPolicy
-
 # ======== Spring Boot Actuator 配置 ========
 management:
   endpoints:
@@ -99,7 +79,6 @@ management:
     tags:
       # 必须加上对应的应用名，因为需要以应用的维度来查看对应的监控
       application: ${spring.application.name}
-
 
 # ======== Security 配置 ========
 security:
@@ -123,7 +102,6 @@ security:
   apiWhitelist:
     - "/user/register"
     - "/user/login"
-    - "/admin/getApiPaths"
 
 # ======== SpringDocs文档配置 ========
 springdocs:

@@ -7,7 +7,7 @@
 # 默认参数
 ENVIRONMENT="prod"
 DOCKER_BUILD=false
-IMAGE_NAME="spring-boot-app"
+IMAGE_NAME="spring-boot-app:latest"
 CONTAINER_NAME="spring-boot-app"
 
 # 处理命令行参数
@@ -44,7 +44,4 @@ if [ "$DOCKER_BUILD" = true ]; then
 
   # 构建新的Docker镜像
   docker build -t $IMAGE_NAME -f Dockerfile .
-
-  # 启动Docker容器
-  docker run -d --name $CONTAINER_NAME -p 8080:8080 $IMAGE_NAME
 fi
