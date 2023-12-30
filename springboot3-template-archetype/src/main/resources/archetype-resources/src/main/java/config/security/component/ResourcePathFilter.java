@@ -1,8 +1,8 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.model.result.ApiResult;
-import ${groupId}.common.utils.JsonUtils;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.model.result.ApiResult;
+import ${package}.common.utils.JsonUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

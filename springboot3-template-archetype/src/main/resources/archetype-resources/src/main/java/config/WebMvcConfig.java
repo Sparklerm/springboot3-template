@@ -1,8 +1,8 @@
-package ${groupId}.config;
+package ${package}.config;
 
-import ${groupId}.common.log.BizLogHolderInterceptor;
-import ${groupId}.config.security.component.SecurityDetailsContextInterceptor;
-import ${groupId}.config.security.component.SecurityProperties;
+import ${package}.common.log.BizLogHolderInterceptor;
+import ${package}.config.security.component.SecurityDetailsContextInterceptor;
+import ${package}.config.security.component.SecurityProperties;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

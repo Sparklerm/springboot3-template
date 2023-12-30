@@ -1,4 +1,4 @@
-package ${groupId}.common.utils;
+package ${package}.common.utils;
 
 import lombok.Getter;
 import org.springframework.beans.BeansException;

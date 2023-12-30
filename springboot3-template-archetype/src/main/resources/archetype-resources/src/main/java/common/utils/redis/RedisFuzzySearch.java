@@ -1,4 +1,4 @@
-package ${groupId}.common.utils.redis;
+package ${package}.common.utils.redis;
 
 import com.google.common.collect.Lists;
 import jodd.util.StringUtil;

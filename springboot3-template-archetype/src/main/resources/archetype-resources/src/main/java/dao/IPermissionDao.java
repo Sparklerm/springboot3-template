@@ -1,7 +1,7 @@
-package ${groupId}.dao;
+package ${package}.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import ${groupId}.model.po.PermissionPO;
+import ${package}.model.po.PermissionPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author alex meng
  * @description 针对表【permission】的数据库操作DAO接口
  * @createDate 2023-12-24 02:38:19
- * @see ${groupId}.model.po.PermissionPO
+ * @see ${package}.model.po.PermissionPO
  */
 @Mapper
 public interface IPermissionDao extends BaseMapper<PermissionPO> {

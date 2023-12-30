@@ -1,16 +1,16 @@
-package ${groupId}.controller;
+package ${package}.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.exception.BizAssert;
-import ${groupId}.common.model.result.ApiResult;
-import ${groupId}.common.model.result.PageResultRecord;
-import ${groupId}.model.po.PermissionPO;
-import ${groupId}.model.vo.request.PermissionAddRequest;
-import ${groupId}.model.vo.request.PermissionPageRequest;
-import ${groupId}.service.IPermissionService;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.exception.BizAssert;
+import ${package}.common.model.result.ApiResult;
+import ${package}.common.model.result.PageResultRecord;
+import ${package}.model.po.PermissionPO;
+import ${package}.model.vo.request.PermissionAddRequest;
+import ${package}.model.vo.request.PermissionPageRequest;
+import ${package}.service.IPermissionService;
 import io.micrometer.common.util.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,6 +1,6 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
-import ${groupId}.common.utils.JwtUtils;
+import ${package}.common.utils.JwtUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

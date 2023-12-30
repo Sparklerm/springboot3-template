@@ -1,4 +1,4 @@
-package ${groupId}.common.log;
+package ${package}.common.log;
 
 /**
  * 业务日志操作

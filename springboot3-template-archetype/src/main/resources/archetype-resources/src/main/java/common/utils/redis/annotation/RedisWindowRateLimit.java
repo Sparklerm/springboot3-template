@@ -1,8 +1,8 @@
-package ${groupId}.common.utils.redis.annotation;
+package ${package}.common.utils.redis.annotation;
 
 
-import ${groupId}.common.utils.redis.enums.RedisLimitLevel;
-import ${groupId}.common.utils.redis.enums.RedisLimitType;
+import ${package}.common.utils.redis.enums.RedisLimitLevel;
+import ${package}.common.utils.redis.enums.RedisLimitType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

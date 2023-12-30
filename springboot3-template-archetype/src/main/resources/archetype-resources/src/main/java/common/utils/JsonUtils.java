@@ -1,4 +1,4 @@
-package ${groupId}.common.utils;
+package ${package}.common.utils;
 
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;

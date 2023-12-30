@@ -1,8 +1,8 @@
-package ${groupId}.config.exception;
+package ${package}.config.exception;
 
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.exception.BizException;
-import ${groupId}.common.model.result.ApiResult;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.exception.BizException;
+import ${package}.common.model.result.ApiResult;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;

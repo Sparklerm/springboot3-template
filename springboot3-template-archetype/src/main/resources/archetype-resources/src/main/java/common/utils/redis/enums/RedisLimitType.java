@@ -1,4 +1,4 @@
-package ${groupId}.common.utils.redis.enums;
+package ${package}.common.utils.redis.enums;
 
 import lombok.Getter;
 

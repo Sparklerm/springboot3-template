@@ -1,4 +1,4 @@
-package ${groupId}.common.utils.redis;
+package ${package}.common.utils.redis;
 
 import jakarta.annotation.Resource;
 import org.redisson.api.RAtomicDouble;

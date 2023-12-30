@@ -1,4 +1,4 @@
-package ${groupId}.common.constants;
+package ${package}.common.constants;
 
 /**
  * Redis 缓存key

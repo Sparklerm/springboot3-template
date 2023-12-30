@@ -1,4 +1,4 @@
-package ${groupId}.common.utils.redis.annotation;
+package ${package}.common.utils.redis.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

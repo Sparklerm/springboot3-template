@@ -1,4 +1,4 @@
-package ${groupId}.common.enums;
+package ${package}.common.enums;
 
 /**
  * The interface Error code enum format.

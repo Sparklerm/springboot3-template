@@ -1,4 +1,4 @@
-package ${groupId}.common.log;
+package ${package}.common.log;
 
 import lombok.Builder;
 import lombok.Data;

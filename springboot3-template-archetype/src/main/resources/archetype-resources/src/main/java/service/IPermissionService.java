@@ -1,7 +1,7 @@
-package ${groupId}.service;
+package ${package}.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import ${groupId}.model.po.PermissionPO;
+import ${package}.model.po.PermissionPO;
 
 /**
  * @author alex meng

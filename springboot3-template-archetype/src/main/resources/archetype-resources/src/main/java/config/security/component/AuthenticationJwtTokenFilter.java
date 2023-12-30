@@ -1,12 +1,12 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
-import ${groupId}.common.constants.RedisCacheKey;
-import ${groupId}.common.utils.JsonUtils;
-import ${groupId}.common.utils.JwtUtils;
-import ${groupId}.common.utils.StrUtils;
-import ${groupId}.common.utils.encrypt.EncryptUtils;
-import ${groupId}.common.utils.redis.RedisService;
-import ${groupId}.model.po.UserPO;
+import ${package}.common.constants.RedisCacheKey;
+import ${package}.common.utils.JsonUtils;
+import ${package}.common.utils.JwtUtils;
+import ${package}.common.utils.StrUtils;
+import ${package}.common.utils.encrypt.EncryptUtils;
+import ${package}.common.utils.redis.RedisService;
+import ${package}.model.po.UserPO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

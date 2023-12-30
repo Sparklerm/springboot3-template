@@ -1,4 +1,4 @@
-package ${groupId}.common.constants;
+package ${package}.common.constants;
 
 /**
  * 业务常量

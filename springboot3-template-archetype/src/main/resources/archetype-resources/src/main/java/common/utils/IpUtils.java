@@ -1,4 +1,4 @@
-package ${groupId}.common.utils;
+package ${package}.common.utils;
 
 
 import jakarta.servlet.http.HttpServletRequest;

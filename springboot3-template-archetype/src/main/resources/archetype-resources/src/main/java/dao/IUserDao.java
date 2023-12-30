@@ -1,7 +1,7 @@
-package ${groupId}.dao;
+package ${package}.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import ${groupId}.model.po.UserPO;
+import ${package}.model.po.UserPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

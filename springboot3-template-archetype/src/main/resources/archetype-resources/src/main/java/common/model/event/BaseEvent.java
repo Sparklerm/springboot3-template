@@ -1,4 +1,4 @@
-package ${groupId}.common.model.event;
+package ${package}.common.model.event;
 
 import cn.hutool.core.util.IdUtil;
 import io.swagger.v3.oas.annotations.media.Schema;

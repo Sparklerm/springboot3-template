@@ -1,17 +1,17 @@
-package ${groupId}.controller;
+package ${package}.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.exception.BizAssert;
-import ${groupId}.common.model.result.ApiResult;
-import ${groupId}.common.model.result.PageResultRecord;
-import ${groupId}.model.po.PermissionPO;
-import ${groupId}.model.po.RolePO;
-import ${groupId}.model.vo.request.RoleAddRequest;
-import ${groupId}.model.vo.request.RolePageRequest;
-import ${groupId}.service.IRoleService;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.exception.BizAssert;
+import ${package}.common.model.result.ApiResult;
+import ${package}.common.model.result.PageResultRecord;
+import ${package}.model.po.PermissionPO;
+import ${package}.model.po.RolePO;
+import ${package}.model.vo.request.RoleAddRequest;
+import ${package}.model.vo.request.RolePageRequest;
+import ${package}.service.IRoleService;
 import io.micrometer.common.util.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

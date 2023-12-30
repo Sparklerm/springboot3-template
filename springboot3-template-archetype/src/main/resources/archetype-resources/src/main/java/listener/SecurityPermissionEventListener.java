@@ -1,9 +1,9 @@
-package ${groupId}.listener;
+package ${package}.listener;
 
-import ${groupId}.common.constants.RedisCacheKey;
-import ${groupId}.common.utils.redis.RedisService;
-import ${groupId}.config.security.SecurityConfiguration;
-import ${groupId}.model.event.SecurityPermissionEvent;
+import ${package}.common.constants.RedisCacheKey;
+import ${package}.common.utils.redis.RedisService;
+import ${package}.config.security.SecurityConfiguration;
+import ${package}.model.event.SecurityPermissionEvent;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

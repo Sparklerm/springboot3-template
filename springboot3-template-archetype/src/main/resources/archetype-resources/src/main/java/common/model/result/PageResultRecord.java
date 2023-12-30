@@ -1,4 +1,4 @@
-package ${groupId}.common.model.result;
+package ${package}.common.model.result;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.media.Schema;

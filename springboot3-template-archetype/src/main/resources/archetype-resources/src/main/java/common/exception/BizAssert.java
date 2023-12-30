@@ -1,8 +1,8 @@
-package ${groupId}.common.exception;
+package ${package}.common.exception;
 
 
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.enums.BizCodeEnumFormat;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.enums.BizCodeEnumFormat;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;

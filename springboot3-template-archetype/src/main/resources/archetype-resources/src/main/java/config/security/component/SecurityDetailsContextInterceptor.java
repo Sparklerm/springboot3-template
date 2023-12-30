@@ -1,4 +1,4 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

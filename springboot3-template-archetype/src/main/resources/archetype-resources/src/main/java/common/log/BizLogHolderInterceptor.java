@@ -1,8 +1,8 @@
-package ${groupId}.common.log;
+package ${package}.common.log;
 
 import cn.hutool.core.util.IdUtil;
-import ${groupId}.config.security.component.SecurityDetailsContextHolder;
-import ${groupId}.config.security.component.SecurityUserDetails;
+import ${package}.config.security.component.SecurityDetailsContextHolder;
+import ${package}.config.security.component.SecurityUserDetails;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

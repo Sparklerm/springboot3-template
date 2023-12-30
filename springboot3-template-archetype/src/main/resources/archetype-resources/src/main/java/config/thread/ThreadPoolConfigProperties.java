@@ -1,4 +1,4 @@
-package ${groupId}.config.thread;
+package ${package}.config.thread;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,7 +1,7 @@
-package ${groupId}.common.utils.redis;
+package ${package}.common.utils.redis;
 
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.exception.BizAssert;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.exception.BizAssert;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

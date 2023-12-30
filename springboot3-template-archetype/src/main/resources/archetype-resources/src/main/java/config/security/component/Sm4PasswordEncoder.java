@@ -1,6 +1,6 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
-import ${groupId}.common.utils.encrypt.EncryptUtils;
+import ${package}.common.utils.encrypt.EncryptUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**

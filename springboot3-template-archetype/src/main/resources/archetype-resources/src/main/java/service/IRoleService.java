@@ -1,8 +1,8 @@
-package ${groupId}.service;
+package ${package}.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import ${groupId}.model.po.PermissionPO;
-import ${groupId}.model.po.RolePO;
+import ${package}.model.po.PermissionPO;
+import ${package}.model.po.RolePO;
 
 import java.util.List;
 

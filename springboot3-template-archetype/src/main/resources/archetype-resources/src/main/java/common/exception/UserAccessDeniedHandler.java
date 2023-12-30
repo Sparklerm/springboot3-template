@@ -1,9 +1,9 @@
-package ${groupId}.common.exception;
+package ${package}.common.exception;
 
 
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.model.result.ApiResult;
-import ${groupId}.common.utils.JsonUtils;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.model.result.ApiResult;
+import ${package}.common.utils.JsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

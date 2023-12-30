@@ -1,4 +1,4 @@
-package ${groupId}.common.utils;
+package ${package}.common.utils;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.CharSequenceUtil;

@@ -1,4 +1,4 @@
-package ${groupId}.config.mybatis;
+package ${package}.config.mybatis;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * MybatisPlus配置类
  */
 @Configuration
-@MapperScan("${groupId}.dao")
+@MapperScan("${package}.dao")
 public class MybatisConfig {
 
     /**

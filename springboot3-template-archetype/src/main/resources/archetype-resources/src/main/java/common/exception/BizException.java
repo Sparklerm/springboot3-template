@@ -1,7 +1,7 @@
-package ${groupId}.common.exception;
+package ${package}.common.exception;
 
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.enums.BizCodeEnumFormat;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.enums.BizCodeEnumFormat;
 import lombok.Getter;
 
 import java.io.Serial;

@@ -1,10 +1,10 @@
-package ${groupId}.common.model.result;
+package ${package}.common.model.result;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import ${groupId}.common.constants.BizConstant;
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.enums.YesNoEnum;
+import ${package}.common.constants.BizConstant;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.enums.YesNoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

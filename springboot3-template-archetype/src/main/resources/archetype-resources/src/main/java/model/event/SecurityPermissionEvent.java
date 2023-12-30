@@ -1,6 +1,6 @@
-package ${groupId}.model.event;
+package ${package}.model.event;
 
-import ${groupId}.common.model.event.BaseEvent;
+import ${package}.common.model.event.BaseEvent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

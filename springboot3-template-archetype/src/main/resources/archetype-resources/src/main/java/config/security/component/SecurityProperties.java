@@ -1,4 +1,4 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
 import com.google.common.collect.ObjectArrays;
 import lombok.Getter;

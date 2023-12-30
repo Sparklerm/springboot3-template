@@ -1,9 +1,9 @@
-package ${groupId}.common.utils.redis.aspect;
+package ${package}.common.utils.redis.aspect;
 
 import cn.hutool.core.util.StrUtil;
-import ${groupId}.common.utils.SpElUtils;
-import ${groupId}.common.utils.redis.RedisLockService;
-import ${groupId}.common.utils.redis.annotation.RedissonLock;
+import ${package}.common.utils.SpElUtils;
+import ${package}.common.utils.redis.RedisLockService;
+import ${package}.common.utils.redis.annotation.RedissonLock;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -33,7 +33,7 @@ public class RedissonLockAspect {
     @Autowired
     private RedisLockService redisLockService;
 
-    @Pointcut("@annotation(${groupId}.common.utils.redis.annotation.RedissonLock)")
+    @Pointcut("@annotation(${package}.common.utils.redis.annotation.RedissonLock)")
     public void lockPointcut() {
     }
 

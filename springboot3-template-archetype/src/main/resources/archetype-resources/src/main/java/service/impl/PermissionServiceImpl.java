@@ -1,14 +1,14 @@
-package ${groupId}.service.impl;
+package ${package}.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.exception.BizAssert;
-import ${groupId}.dao.IPermissionDao;
-import ${groupId}.model.event.SecurityPermissionEvent;
-import ${groupId}.model.po.PermissionPO;
-import ${groupId}.service.IPermissionService;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.exception.BizAssert;
+import ${package}.dao.IPermissionDao;
+import ${package}.model.event.SecurityPermissionEvent;
+import ${package}.model.po.PermissionPO;
+import ${package}.service.IPermissionService;
 import jakarta.annotation.Resource;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

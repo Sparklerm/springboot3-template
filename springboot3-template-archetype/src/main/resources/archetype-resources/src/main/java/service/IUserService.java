@@ -1,9 +1,9 @@
-package ${groupId}.service;
+package ${package}.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import ${groupId}.model.dto.UserLoginResultDTO;
-import ${groupId}.model.po.RolePO;
-import ${groupId}.model.po.UserPO;
+import ${package}.model.dto.UserLoginResultDTO;
+import ${package}.model.po.RolePO;
+import ${package}.model.po.UserPO;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package ${groupId}.config;
+package ${package}.config;
 
-import ${groupId}.common.utils.JwtUtils;
+import ${package}.common.utils.JwtUtils;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

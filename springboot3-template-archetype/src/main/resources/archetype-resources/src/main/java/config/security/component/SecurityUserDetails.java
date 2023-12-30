@@ -1,8 +1,8 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
-import ${groupId}.common.enums.YesNoEnum;
-import ${groupId}.model.po.PermissionPO;
-import ${groupId}.model.po.UserPO;
+import ${package}.common.enums.YesNoEnum;
+import ${package}.model.po.PermissionPO;
+import ${package}.model.po.UserPO;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

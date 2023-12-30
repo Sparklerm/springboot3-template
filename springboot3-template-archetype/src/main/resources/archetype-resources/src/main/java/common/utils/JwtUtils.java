@@ -1,4 +1,4 @@
-package ${groupId}.common.utils;
+package ${package}.common.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

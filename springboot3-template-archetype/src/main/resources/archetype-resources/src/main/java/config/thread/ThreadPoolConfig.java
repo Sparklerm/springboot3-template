@@ -1,4 +1,4 @@
-package ${groupId}.config.thread;
+package ${package}.config.thread;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import lombok.extern.slf4j.Slf4j;

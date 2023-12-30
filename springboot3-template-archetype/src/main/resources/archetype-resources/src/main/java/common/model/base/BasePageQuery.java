@@ -1,9 +1,9 @@
-package ${groupId}.common.model.base;
+package ${package}.common.model.base;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import ${groupId}.common.enums.YesNoEnum;
-import ${groupId}.common.utils.StrUtils;
+import ${package}.common.enums.YesNoEnum;
+import ${package}.common.utils.StrUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.apache.commons.lang3.ObjectUtils;

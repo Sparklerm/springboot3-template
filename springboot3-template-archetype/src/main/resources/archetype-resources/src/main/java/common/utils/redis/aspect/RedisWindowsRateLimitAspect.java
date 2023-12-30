@@ -1,13 +1,13 @@
-package ${groupId}.common.utils.redis.aspect;
+package ${package}.common.utils.redis.aspect;
 
 import cn.hutool.core.util.StrUtil;
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.exception.BizAssert;
-import ${groupId}.common.utils.IpUtils;
-import ${groupId}.common.utils.SpElUtils;
-import ${groupId}.common.utils.redis.annotation.RedisWindowRateLimit;
-import ${groupId}.common.utils.redis.enums.RedisLimitLevel;
-import ${groupId}.common.utils.redis.enums.RedisLimitType;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.exception.BizAssert;
+import ${package}.common.utils.IpUtils;
+import ${package}.common.utils.SpElUtils;
+import ${package}.common.utils.redis.annotation.RedisWindowRateLimit;
+import ${package}.common.utils.redis.enums.RedisLimitLevel;
+import ${package}.common.utils.redis.enums.RedisLimitType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -45,7 +45,7 @@ public class RedisWindowsRateLimitAspect {
     @Autowired
     private RedissonClient redisson;
 
-    @Pointcut("@annotation(${groupId}.common.utils.redis.annotation.RedisWindowRateLimit)")
+    @Pointcut("@annotation(${package}.common.utils.redis.annotation.RedisWindowRateLimit)")
     public void rateLimitAnnotation() {
     }
 

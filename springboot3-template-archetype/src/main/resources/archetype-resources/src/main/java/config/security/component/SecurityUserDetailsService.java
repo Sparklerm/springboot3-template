@@ -1,13 +1,13 @@
-package ${groupId}.config.security.component;
+package ${package}.config.security.component;
 
-import ${groupId}.common.enums.BizCodeEnum;
-import ${groupId}.common.exception.BizAssert;
-import ${groupId}.dao.IPermissionDao;
-import ${groupId}.dao.IRoleDao;
-import ${groupId}.dao.IUserDao;
-import ${groupId}.model.po.PermissionPO;
-import ${groupId}.model.po.RolePO;
-import ${groupId}.model.po.UserPO;
+import ${package}.common.enums.BizCodeEnum;
+import ${package}.common.exception.BizAssert;
+import ${package}.dao.IPermissionDao;
+import ${package}.dao.IRoleDao;
+import ${package}.dao.IUserDao;
+import ${package}.model.po.PermissionPO;
+import ${package}.model.po.RolePO;
+import ${package}.model.po.UserPO;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

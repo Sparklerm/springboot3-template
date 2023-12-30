@@ -1,4 +1,4 @@
-package ${groupId}.common.model.result;
+package ${package}.common.model.result;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package ${groupId}.common.utils.encrypt;
+package ${package}.common.utils.encrypt;
 
 import cn.hutool.crypto.SmUtil;
 
