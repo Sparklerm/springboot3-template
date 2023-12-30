@@ -16,7 +16,7 @@ import java.util.Collections;
 /**
  * 基础查询对象
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-29 18:09
  */
 @Data

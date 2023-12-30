@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * 业务日志信息
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-24 12:53
  */
 @Data

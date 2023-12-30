@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 限流级别
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-10-07 11:39
  */
 @Getter

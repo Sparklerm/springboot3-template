@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * 是否判断枚举
  *
- * @author MENGJIAO
+ * @author alex meng
  * @createDate 2021-02-05
  */
 @Getter

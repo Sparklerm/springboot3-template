@@ -12,11 +12,13 @@ import java.util.Objects;
 /**
  * 拦截器，将当前会话的用户信息保存到上下文
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-11-21 01:04
  */
 @Component
 public class SecurityDetailsContextInterceptor implements HandlerInterceptor {
+
+    private static final String USER = "anonymousUser";
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -24,7 +26,8 @@ public class SecurityDetailsContextInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 保存用户信息到当前会话，无验证信息时不保存
-        if (Objects.nonNull(authentication) && Objects.nonNull(authentication.getPrincipal())) {
+        if (Objects.nonNull(authentication) && Objects.nonNull(authentication.getPrincipal())
+                && !authentication.getPrincipal().equals(USER)) {
             SecurityUserDetails principal = (SecurityUserDetails) authentication.getPrincipal();
             SecurityDetailsContextHolder.setContext(principal);
         }

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Redis模糊搜索
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-11-07 11:09
  */
 @Service

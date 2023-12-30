@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @author MENGJIAO
+ * @author alex meng
  * @description 针对表【role】的数据库操作DAO接口
  * @createDate 2023-12-24 02:38:19
  * @see com.yiyan.boot3.model.po.RolePO

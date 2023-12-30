@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 窗口限流类型
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-10-07 12:14
  */
 @Getter

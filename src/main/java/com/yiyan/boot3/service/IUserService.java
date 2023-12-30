@@ -5,7 +5,7 @@ import com.yiyan.boot3.model.dto.UserLoginResultDTO;
 import com.yiyan.boot3.model.po.UserPO;
 
 /**
- * @author MENGJIAO
+ * @author alex meng
  * @description 针对表【admin_user(管理员用户表)】的数据库操作Service
  * @createDate 2023-12-23 22:39:27
  */

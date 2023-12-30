@@ -32,7 +32,7 @@ import java.util.Objects;
 /**
  * Redis 窗口限流切面
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-10-07 10:45
  */
 @Slf4j

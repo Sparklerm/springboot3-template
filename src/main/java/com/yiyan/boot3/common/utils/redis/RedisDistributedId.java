@@ -17,7 +17,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * Redis 分布式ID生成器
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-05-15 14:37
  */
 @Slf4j

@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 /**
  * 基于Redis Redisson 分布式锁工具类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2022-12-21
  */
 @Slf4j

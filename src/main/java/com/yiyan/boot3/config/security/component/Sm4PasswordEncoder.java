@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * 国密SM4加密类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-23 05:15
  */
 public class Sm4PasswordEncoder implements PasswordEncoder {

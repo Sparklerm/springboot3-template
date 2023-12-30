@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Redisson 分布式锁注解
  *
- * @author Damon Meng
+ * @author alex meng
  * @createDate 2023-09-18 07:17
  */
 @Target(ElementType.METHOD)

@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author MENGJIAO
+ * @author alex meng
  * @description 针对表【admin_user(管理员用户表)】的数据库操作Service实现
  * @createDate 2023-12-23 22:39:27
  */

@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * 加密工具类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-24 11:43
  */
 public class EncryptUtils {

@@ -3,7 +3,7 @@ package com.yiyan.boot3.common.constants;
 /**
  * Redis 缓存key
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-11-23 07:57
  */
 public class RedisCacheKey {

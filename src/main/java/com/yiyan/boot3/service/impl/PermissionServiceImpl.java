@@ -12,7 +12,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
- * @author MENGJIAO
+ * @author alex meng
  * @description 针对表【permission】的数据库操作Service实现
  * @createDate 2023-12-24 02:38:19
  */

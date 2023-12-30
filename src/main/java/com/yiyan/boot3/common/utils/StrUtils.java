@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * 字符串工具类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023 /01/01
  */
 public class StrUtils {

@@ -3,7 +3,7 @@ package com.yiyan.boot3.common.log;
 /**
  * 业务日志操作
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-24 12:52
  */
 public class BizLogHolder {

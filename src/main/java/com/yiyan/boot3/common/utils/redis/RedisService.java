@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Redis工具类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-05-08 9:38
  */
 @Component

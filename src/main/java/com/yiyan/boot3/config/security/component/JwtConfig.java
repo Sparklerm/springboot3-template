@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-23 07:36
  */
 @Slf4j

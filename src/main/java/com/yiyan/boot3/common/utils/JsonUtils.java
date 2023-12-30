@@ -38,7 +38,7 @@ import java.util.TimeZone;
 /**
  * Json 工具类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-01-02
  */
 @Slf4j

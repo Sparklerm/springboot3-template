@@ -7,6 +7,7 @@ import com.yiyan.boot3.common.enums.BizCodeEnum;
 import com.yiyan.boot3.common.exception.BizAssert;
 import com.yiyan.boot3.common.model.result.ApiResult;
 import com.yiyan.boot3.common.model.result.PageResultRecord;
+import com.yiyan.boot3.model.po.PermissionPO;
 import com.yiyan.boot3.model.po.RolePO;
 import com.yiyan.boot3.model.vo.request.RoleAddRequest;
 import com.yiyan.boot3.model.vo.request.RolePageRequest;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-29 17:40
  */
 @RestController
@@ -42,7 +43,7 @@ public class RoleController {
 
     @Operation(summary = "添加角色")
     @PostMapping("/")
-    public ApiResult<RolePO> addPermission(@Valid @RequestBody RoleAddRequest request) {
+    public ApiResult<RolePO> addRole(@Valid @RequestBody RoleAddRequest request) {
         // 值填充
         RolePO role = new RolePO();
         role.setName(request.getName());
@@ -56,14 +57,14 @@ public class RoleController {
 
     @Operation(summary = "查询角色")
     @GetMapping("/{id}")
-    public ApiResult<RolePO> getPermission(@PathVariable("id") String id) {
+    public ApiResult<RolePO> getRole(@PathVariable("id") String id) {
         RolePO role = roleService.getById(id);
         return ApiResult.success(role);
     }
 
     @Operation(summary = "查询角色列表")
     @GetMapping("/")
-    public ApiResult<PageResultRecord<RolePO>> getPermissions(RolePageRequest request) {
+    public ApiResult<PageResultRecord<RolePO>> getRoles(RolePageRequest request) {
         // 参数填充
         Page<RolePO> rolePage = request.getPage();
         Wrapper<RolePO> wrapper = new LambdaQueryWrapper<>(RolePO.class)
@@ -77,8 +78,8 @@ public class RoleController {
 
     @Operation(summary = "更新角色")
     @PutMapping("/{id}")
-    public ApiResult<RolePO> updatePermission(@PathVariable("id") Long id,
-                                              @RequestBody RoleAddRequest request) {
+    public ApiResult<RolePO> updateRole(@PathVariable("id") Long id,
+                                        @RequestBody RoleAddRequest request) {
         // 查询权限
         RolePO selectResult = roleService.getById(id);
         BizAssert.notNull(selectResult, BizCodeEnum.PERMISSION_NOT_EXIST);
@@ -92,15 +93,49 @@ public class RoleController {
 
     @Operation(summary = "删除角色")
     @DeleteMapping("/{id}")
-    public ApiResult<Boolean> deletePermission(@PathVariable("id") Long id) {
+    public ApiResult<Boolean> deleteRole(@PathVariable("id") Long id) {
         boolean remove = roleService.removeById(id);
         return ApiResult.deleted(remove);
     }
 
     @Operation(summary = "批量删除角色")
     @DeleteMapping("/")
-    public ApiResult<Boolean> deletePermissions(@RequestBody List<Long> ids) {
+    public ApiResult<Boolean> deleteRoles(@RequestBody List<Long> ids) {
         boolean remove = roleService.removeByIds(ids);
         return ApiResult.deleted(remove);
+    }
+
+    @Operation(summary = "查询角色权限")
+    @GetMapping("/permission/{id}")
+    public ApiResult<List<PermissionPO>> getRolePermissions(@PathVariable("id") Long id) {
+        // 查询角色信息
+        RolePO role = roleService.getById(id);
+        BizAssert.notNull(role, BizCodeEnum.ROLE_NOT_EXIST);
+
+        // 查询角色权限
+        List<PermissionPO> permissionList = roleService.getPermission(id);
+        return ApiResult.success(permissionList);
+    }
+
+    @Operation(summary = "角色绑定权限")
+    @PostMapping("/bind/{id}")
+    public ApiResult<Integer> bindPermission(@PathVariable("id") Long id, @RequestBody List<Long> permissionIds) {
+        // 判断角色是否存在
+        RolePO role = roleService.getById(id);
+        BizAssert.notNull(role, BizCodeEnum.ROLE_NOT_EXIST);
+        // 绑定权限
+        Integer result = roleService.bindPermission(id, permissionIds);
+        return ApiResult.created(result);
+    }
+
+    @Operation(summary = "角色解绑权限")
+    @PostMapping("/unbind/{id}")
+    public ApiResult<Integer> unbindPermission(@PathVariable("id") Long id, @RequestBody List<Long> permissionIds) {
+        // 判断角色是否存在
+        RolePO role = roleService.getById(id);
+        BizAssert.notNull(role, BizCodeEnum.ROLE_NOT_EXIST);
+        // 解绑权限
+        Integer result = roleService.unbindPermission(id, permissionIds);
+        return ApiResult.created(result);
     }
 }

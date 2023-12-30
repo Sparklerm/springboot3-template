@@ -47,7 +47,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Spring Security配置文件
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-23 04:55
  */
 @Configuration

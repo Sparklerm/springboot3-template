@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-24 13:12
  */
 @Component

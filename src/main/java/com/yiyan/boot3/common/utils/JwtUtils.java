@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * JWT工具类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-10-30 22:27
  */
 public class JwtUtils {

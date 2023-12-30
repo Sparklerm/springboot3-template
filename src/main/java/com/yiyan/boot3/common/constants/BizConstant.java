@@ -3,7 +3,7 @@ package com.yiyan.boot3.common.constants;
 /**
  * 业务常量
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023/2/11-21:50
  */
 public class BizConstant {

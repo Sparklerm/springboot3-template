@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 /**
  * 接口文档配置
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-24 05:39
  */
 @Configuration

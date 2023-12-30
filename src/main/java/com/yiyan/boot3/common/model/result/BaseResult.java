@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 基础返回实体
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2020-11-13 13:17
  */
 @Data

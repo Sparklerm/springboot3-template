@@ -5,7 +5,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 /**
  * Spring Security当前会话用户信息保存
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-11-21 01:04
  */
 public class SecurityDetailsContextHolder {

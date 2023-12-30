@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-30 11:48
  */
 @EqualsAndHashCode(callSuper = true)

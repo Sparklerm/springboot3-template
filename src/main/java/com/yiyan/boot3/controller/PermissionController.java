@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-29 17:40
  */
 @RestController

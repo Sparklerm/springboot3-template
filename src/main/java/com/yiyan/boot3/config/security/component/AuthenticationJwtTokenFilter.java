@@ -24,7 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-23 07:38
  */
 @Component

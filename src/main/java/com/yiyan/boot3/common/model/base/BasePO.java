@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * 实体基类
  *
- * @author Alex Meng
+ * @author alex meng
  */
 @Data
 public class BasePO {

@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 管理员用户注册请求参数
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-23 23:14
  */
 @Data

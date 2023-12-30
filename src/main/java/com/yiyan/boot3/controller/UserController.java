@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-23 23:12
  */
 @Slf4j

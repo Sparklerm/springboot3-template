@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 断言处理类，用于抛出各种API异常
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2020-2-27
  */
 public class BizAssert {

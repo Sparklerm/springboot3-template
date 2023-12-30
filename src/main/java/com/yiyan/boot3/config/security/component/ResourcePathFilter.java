@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * 请求资源路径过滤
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-28 11:56
  */
 @Slf4j

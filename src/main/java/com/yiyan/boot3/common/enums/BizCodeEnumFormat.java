@@ -3,7 +3,7 @@ package com.yiyan.boot3.common.enums;
 /**
  * The interface Error code enum format.
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023 -04-21 14:52
  */
 public interface BizCodeEnumFormat {

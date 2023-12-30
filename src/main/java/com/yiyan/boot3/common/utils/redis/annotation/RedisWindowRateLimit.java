@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 /**
  * Redis 滑动窗口限流注解
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-10-07 10:00
  */
 @Target(ElementType.METHOD)

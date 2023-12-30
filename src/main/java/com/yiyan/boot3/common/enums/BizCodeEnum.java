@@ -7,7 +7,7 @@ import lombok.Getter;
  * 1xxx 系统异常，如参数校验异常、数据库异常等
  * 2xxx 业务异常，如用户不存在、用户已存在等
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2022-11-9
  */
 @Getter
@@ -30,7 +30,7 @@ public enum BizCodeEnum implements BizCodeEnumFormat {
     PERMISSION_ALREADY_EXISTS("2005", "权限已存在"),
     PERMISSION_NOT_EXIST("2006", "权限不存在"),
     ROLE_ALREADY_EXIST("2007", "角色已存在"),
-
+    ROLE_NOT_EXIST("2008", "角色已存在"),
     ;
 
 

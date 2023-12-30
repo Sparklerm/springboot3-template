@@ -9,7 +9,7 @@ import java.io.Serial;
 /**
  * 自定义异常类
  *
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2022/11/9
  */
 @Getter

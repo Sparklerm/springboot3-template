@@ -8,7 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * @author Alex Meng
+ * @author alex meng
  * @createDate 2023-12-23 23:56
  */
 @Data

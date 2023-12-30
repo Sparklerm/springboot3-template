@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * IP工具类
  *
- * @author MENGJIAO
+ * @author alex meng
  */
 public class IpUtils {
 
