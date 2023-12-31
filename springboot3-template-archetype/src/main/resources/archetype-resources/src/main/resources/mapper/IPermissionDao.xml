@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${package}.dao.IPermissionDao">
+<mapper namespace="${package}.${artifactId}.dao.IPermissionDao">
 
-    <select id="selectByRoleId" resultType="${package}.model.po.PermissionPO">
+    <select id="selectByRoleId" resultType="${package}.${artifactId}.model.po.PermissionPO">
         SELECT p.*
         FROM permission p
                  LEFT JOIN role_permission_relationship rpr

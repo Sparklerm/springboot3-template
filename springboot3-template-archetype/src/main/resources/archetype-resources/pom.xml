@@ -165,7 +165,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>${package}.Application</mainClass>
+                    <mainClass>${package}.${artifactId}.Application</mainClass>
                     <!--                    <skip>true</skip>   -->
                     <excludes>
                         <exclude>
